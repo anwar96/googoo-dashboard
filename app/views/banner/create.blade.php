@@ -16,6 +16,11 @@
             <label for="name">Name</label>
             <input type="input" class="form-control" id="name" name="name" placeholder="name banner">
         </div>
+        
+        <div class="form-group">
+            <label for="url">Url</label>
+            <input type="input" class="form-control" id="url" name="url" placeholder="url">
+        </div>
 
         <div class="form-group">
             <label for="file">File input</label>

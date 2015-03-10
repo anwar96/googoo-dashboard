@@ -47,6 +47,7 @@ class BannerResource extends \BaseController
 
             $banner = new Banner;
             $banner->name = Input::get('name');
+            $banner->image_data = Input::get('url');
             $banner->picture = url('/photo/' . $filename);
             $banner->save();
             return Redirect::to('banner');

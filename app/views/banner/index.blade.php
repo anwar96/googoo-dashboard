@@ -19,6 +19,7 @@
                 <thead>
                     <tr>
                         <th>Picture</th>
+                        <th>Url</th>
                         <th class="col-xs-2">Status</th>
                         <th class="col-xs-2">&nbsp;</th>
                     </tr>
@@ -36,6 +37,7 @@
                                 </div>
                             </div>
                         </td>
+                        <td><a target="_blank" href="{{$banner->image_data}}">{{$banner->image_data}}</a></td>
                         <td><a href="{{URL::to('banner/'.$banner->id.'/edit')}}">{{$banner->is_active == 'true' ? 'active': 'not-active'}}</a></td>
                         <td>
                             <a href="{{URL::to('banner/'.$banner->id)}}" class="btn btn-xs btn-danger"><span class="glyphicon glyphicon-trash"></span></a>
