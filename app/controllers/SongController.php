@@ -41,6 +41,19 @@ class SongController extends BaseController {
             return Redirect::to('/song/edit/' . $id)->withErrors($song->errors());
         }
     }
+    
+    function getAdd() {
+        return View::make('song.getAdd');
+    }
+
+    function postAdd() {
+        $song = new Song();
+        if ($song->save()) {
+            return Redirect::to('/artist/show/' . $song->artist_id)->with('message', 'data has been updated');
+        } else {
+            return Redirect::to('/song/edit/' . $song->id)->withErrors($song->errors());
+        }
+    }
 
     public function getDelete($id) {
         $song = Song::findOrFail($id);
