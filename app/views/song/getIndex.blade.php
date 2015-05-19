@@ -83,6 +83,7 @@
         <a href="{{URL::to('song/preimport')}}" class="btn btn-block btn-info">import new songs</a>
         <a href="{{URL::to('song/newsongs')}}" class="btn btn-block btn-info">new songs</a>
         <a href="{{URL::to('song/hitssongs')}}" class="btn btn-block btn-info">hits songs</a>
+        <a href="{{URL::to('song/add')}}" class="btn btn-block btn-info">add new song</a>
     </div>
 </div>
 
