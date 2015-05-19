@@ -18,6 +18,7 @@
             <li class="list-group-item">4. Copy pastekan sesuai data yang CSV dari SAM Broadcaste, atau isi sendiri juga boleh</li>
             <li class="list-group-item">5. Klik <a href="{{URL::to('song/import')}}">disini</a> untuk mengimport kalo sudah yakin datanya benar</li>
             <li class="list-group-item">6. harus sabar.. kecepatan koneksi dan besar data sangat berpengaruh</li>
+            <li class="list-group-item">7. atau klik <a href="{{URL::to('song/add')}}">disini</a> untuk add new song secara manual</li>
         </ul>
     </div>
 </div>
