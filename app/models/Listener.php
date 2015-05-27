@@ -12,5 +12,15 @@ class Listener extends \Eloquent
                 ->orderBy('created_at', 'DESC')
                 ->get();
     }
+    
+    static function getalllistener($start = "", $end = ""){
+        $sql = "SELECT DATE(created_at) as date, count(id) as count FROM listeners GROUP BY DATE(created_at)";
+        $listener = DB::select($sql);
+        if ($start != "" && $end != ""){
+            $listener->whereBetween('created_at', array($start, $end));
+        }
+        
+        return $listener;
+    }
 
 }
