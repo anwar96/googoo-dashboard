@@ -13,7 +13,13 @@ class ListenerController extends BaseController {
             $arlistener[$key]['date'] = $value->date;
             $arlistener[$key]['visits'] = $value->count;
         }
-        return View::make('listener.getIndex')->with('listener', $arlistener);
+        
+        if (Input::get('type') == 'm'){
+            $view = 'listener.getIndex';
+        }else{
+            $view = 'listener.getIndexHourly';
+        }
+        return View::make($view)->with('listener', $arlistener);
     }
 
 }

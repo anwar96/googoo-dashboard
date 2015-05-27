@@ -11,10 +11,9 @@
 <script>
     var chart;
     var chartData = [];
-    var chartCursor;
-    
+
     AmCharts.ready(function () {
-        // generate some data first
+        // first we generate some random data
         generateChartData();
 
         // SERIAL CHART
@@ -22,78 +21,46 @@
 
         chart.dataProvider = chartData;
         chart.categoryField = "date";
-        chart.balloon.bulletSize = 5;
 
-        // listen for "dataUpdated" event (fired when chart is rendered) and call zoomChart method when it happens
+        // data updated event will be fired when chart is first displayed,
+        // also when data will be updated. We'll use it to set some
+        // initial zoom
         chart.addListener("dataUpdated", zoomChart);
 
         // AXES
-        // category
+        // Category
         var categoryAxis = chart.categoryAxis;
-        categoryAxis.parseDates = true; // as our data is date-based, we set parseDates to true
-        categoryAxis.minPeriod = "DD"; // our data is daily, so we set minPeriod to DD
-        categoryAxis.dashLength = 1;
-        categoryAxis.minorGridEnabled = true;
-        categoryAxis.twoLineMode = true;
-        categoryAxis.dateFormats = [{
-            period: 'fff',
-            format: 'JJ:NN:SS'
-        }, {
-            period: 'ss',
-            format: 'JJ:NN:SS'
-        }, {
-            period: 'mm',
-            format: 'JJ:NN'
-        }, {
-            period: 'hh',
-            format: 'JJ:NN'
-        }, {
-            period: 'DD',
-            format: 'DD'
-        }, {
-            period: 'WW',
-            format: 'DD'
-        }, {
-            period: 'MM',
-            format: 'MMM'
-        }, {
-            period: 'YYYY',
-            format: 'YYYY'
-        }];
-
+        categoryAxis.parseDates = true; // in order char to understand dates, we should set parseDates to true
+        categoryAxis.minPeriod = "mm"; // as we have data with minute interval, we have to set "mm" here.
+        categoryAxis.gridAlpha = 0.07;
         categoryAxis.axisColor = "#DADADA";
 
-        // value
+        // Value
         var valueAxis = new AmCharts.ValueAxis();
-        valueAxis.axisAlpha = 0;
-        valueAxis.dashLength = 1;
+        valueAxis.gridAlpha = 0.07;
+        valueAxis.title = "Unique visitors";
         chart.addValueAxis(valueAxis);
 
         // GRAPH
         var graph = new AmCharts.AmGraph();
+        graph.type = "line"; // try to change it to "column"
         graph.title = "red line";
         graph.valueField = "visits";
-        graph.bullet = "round";
-        graph.bulletBorderColor = "#FFFFFF";
-        graph.bulletBorderThickness = 2;
-        graph.bulletBorderAlpha = 1;
-        graph.lineThickness = 2;
-        graph.lineColor = "#5fb503";
-        graph.negativeLineColor = "#efcc26";
-        graph.hideBulletsCount = 50; // this makes the chart to hide bullets when there are more than 50 series in selection
+        graph.lineAlpha = 1;
+        graph.lineColor = "#d1cf2a";
+        graph.fillAlphas = 0.3; // setting fillAlphas to > 0 value makes it area graph
         chart.addGraph(graph);
 
         // CURSOR
-        chartCursor = new AmCharts.ChartCursor();
+        var chartCursor = new AmCharts.ChartCursor();
         chartCursor.cursorPosition = "mouse";
-        chartCursor.pan = true; // set it to fals if you want the cursor to work in "select" mode
+        chartCursor.categoryBalloonDateFormat = "JJ:NN, DD MMMM";
         chart.addChartCursor(chartCursor);
 
         // SCROLLBAR
         var chartScrollbar = new AmCharts.ChartScrollbar();
-        chart.addChartScrollbar(chartScrollbar);
 
-        chart.creditsPosition = "bottom-right";
+        chart.addChartScrollbar(chartScrollbar);
 
         // WRITE
         chart.write("chartdiv");
@@ -103,15 +70,20 @@
         <?php 
             foreach ($listener as $key => $value) {
                 ?>
+                // Split timestamp into [ Y, M, D, h, m, s ]
+                var t = "{{$value['date'].':00:00'}}".split(/[- :]/);
+
+                // Apply each element to the Date function
+                var d = new Date(t[0], t[1]-1, t[2], t[3], t[4], t[5]);
                 chartData.push({
-                    date: new Date("{{$value['date']}}"),
+                    date: d,
                     visits: {{$value['visits']}}
                 });
                 <?php
             }
         ?>
     }
-    
+        
     // this method is called when chart is first inited as we listen for "dataUpdated" event
     function zoomChart() {
         // different zoom methods can be used - zoomToIndexes, zoomToDates, zoomToCategoryValues
