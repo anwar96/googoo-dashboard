@@ -1,11 +1,13 @@
 @extends('master')
 
 @section('css')
+<link href="{{asset('/css/bootstrap-datepicker3.css')}}" rel="stylesheet">
 @stop
 
 @section('javascripts')
 <script src="{{asset('amcharts/amcharts.js')}}" type="text/javascript"></script>
 <script src="{{asset('amcharts/serial.js')}}" type="text/javascript"></script>
+<script src="{{asset('js/bootstrap-datepicker.min.js')}}" type="text/javascript"></script>
 <script>
     var chart;
     var chartData = [];
@@ -110,15 +112,46 @@
         ?>
     }
     
+    console.log(chartData);
+    
     // this method is called when chart is first inited as we listen for "dataUpdated" event
     function zoomChart() {
         // different zoom methods can be used - zoomToIndexes, zoomToDates, zoomToCategoryValues
         chart.zoomToIndexes(chartData.length - 40, chartData.length - 1);
     }
+    
+    $(document).ready(function(){
+        $('#type').change(function(){
+            $('#form-filter').submit();
+        });
+        
+        $('.datepicker').datepicker({
+            format: 'yyyy-mm-dd'
+        });
+    });
 </script>
 @stop
 
 @section('content')
+<div class="row">
+    <div class="col-xs-12">
+        <form id="form-filter" class="form-inline" method="get" action="{{URL::current()}}">
+            <div class="form-group">
+                <label for="type">Data Type</label>
+                {{ Form::select('type', ['m' => 'Monthly', 'h' => 'Hourly'], Input::get('type'), ['class' => 'form-control', 'id' => 'type', 'name' => 'type']) }}
+            </div>
+            <div class="form-group">
+              <label for="start">Start</label>
+              <input class="datepicker" type="text" name="start" class="form-control" id="start" placeholder="Start" value="{{Input::get('start')}}">
+            </div>
+            <div class="form-group">
+              <label for="end">End</label>
+              <input class="datepicker" type="text" name="end" class="form-control" id="end" placeholder="End" value="{{Input::get('end')}}">
+            </div>
+            <input class="btn btn-primary" type="submit" value="submit" />
+        </form>
+    </div>
+</div>
 <h3>Listener</h3>
 <div class="row">
     <div class="col-xs-12">

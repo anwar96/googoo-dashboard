@@ -13,13 +13,19 @@ class Listener extends \Eloquent
                 ->get();
     }
     
-    static function getalllistener($start = "", $end = ""){
-        $sql = "SELECT DATE(created_at) as date, count(id) as count FROM listeners GROUP BY DATE(created_at)";
-        $listener = DB::select($sql);
+    static function getalllistener($type = "m", $start = "", $end = ""){
+        $between = "";
         if ($start != "" && $end != ""){
-            $listener->whereBetween('created_at', array($start, $end));
+            $between = "WHERE created_at BETWEEN '".$start."' AND '".$end."'"; 
         }
         
+        if ($type == "m" || $type == ""){
+            $sql = "SELECT DATE(created_at) as date, count(id) as count FROM listeners ".$between." GROUP BY DATE(created_at)";
+        }else{
+            $sql = "SELECT DATE_FORMAT(created_at, '%Y-%m-%d %H') as date, count(id) as count FROM listeners ".$between." GROUP BY DATE_FORMAT(created_at, '%Y-%m-%d %H')";
+        }
+        
+        $listener = DB::select($sql);
         return $listener;
     }
 
