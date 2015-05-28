@@ -317,7 +317,7 @@
 <h3>Top Genre</h3>
 <div class="row">
     <div class="col-xs-12">
-        <div id="chartdivgenre" style="width: 100%; height: 400px;"></div>
+        <div id="chartdivgenre" style="width: 100%; height: 700px;"></div>
     </div>
 </div>
 @stop
