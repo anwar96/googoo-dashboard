@@ -262,7 +262,7 @@
             foreach ($genre as $key => $value) {
                 ?>
                 chartGenre.push({
-                    "country": '{{$value["name"]}}',
+                    "country": "{{$value["name"]}}",
                     "count": {{$value['total']}}
                 });
                 <?php
