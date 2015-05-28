@@ -21,12 +21,19 @@ class ListenerController extends BaseController {
             $arunique[$key]['visits'] = $value->count;
         }
         
+        $genre = Listener::getTopgenre($start, $end);
+        $argenre = [];
+        foreach ($genre as $key => $value) {
+            $argenre[$key]['name'] = $value->name;
+            $argenre[$key]['total'] = $value->total;
+        }
+        
         if (Input::get('type') == 'm' || Input::get('type') == ''){
             $view = 'listener.getIndex';
         }else{
             $view = 'listener.getIndexHourly';
         }
-        return View::make($view)->with('listener', $arlistener)->with('unique', $arunique);
+        return View::make($view)->with('listener', $arlistener)->with('unique', $arunique)->with('genre', $argenre);
     }
 
 }

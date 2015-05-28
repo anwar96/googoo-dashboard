@@ -46,5 +46,24 @@ class Listener extends \Eloquent {
         $listener = DB::select($sql);
         return $listener;
     }
+    
+    static function getTopgenre($start = "", $end = ""){
+        $between = "";
+        if ($start != "" && $end != "") {
+            $between = "AND created_at BETWEEN '" . $start . "' AND '" . $end . "'";
+        }
+        $sql = "SELECT genres.`name`, COUNT(genre_id) AS total "
+                . "FROM( "
+                . "SELECT artist_id FROM crowd_bands "
+                . "WHERE fbid IS NOT NULL ".$between." GROUP BY artist_id"
+                . ") AS crowds "
+                . "LEFT JOIN artists ON artists.id = crowds.artist_id "
+                . "LEFT JOIN artist_has_genres ON artists.id = artist_has_genres.`artist_id` "
+                . "LEFT JOIN genres ON genres.id = artist_has_genres.`genre_id` "
+                . "where genres.name IS NOT NULL "
+                . "group by genres.id order by total desc";
+        $genre = DB::select($sql);
+        return $genre;
+    }
 
 }

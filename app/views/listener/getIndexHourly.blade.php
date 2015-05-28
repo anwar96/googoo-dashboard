@@ -196,6 +196,80 @@
         chart.zoomToIndexes(chartunique.length - 40, chartunique.length - 1);
     }
     
+    var chartGenre = [];
+    
+    AmCharts.ready(function () {
+        generateGenreData();
+        // SERIAL CHART
+        var chart = new AmCharts.AmSerialChart();
+        chart.dataProvider = chartGenre;
+        chart.categoryField = "country";
+        chart.rotate = true;
+        chart.color = "#FFFFFF";
+        chart.handDrawn = true;
+        chart.handDrawScatter = 4;
+
+        // this line makes the chart to show image in the background
+        //chart.backgroundImage = "images/bg.jpg";
+
+        // sometimes we need to set margins manually
+        // autoMargins should be set to false in order chart to use custom margin values
+        chart.autoMargins = false;
+        chart.marginTop = 100;
+        chart.marginLeft = 50;
+        chart.marginRight = 30;
+        chart.startDuration = 2;
+
+        // AXES
+        // category
+        var categoryAxis = chart.categoryAxis;
+        categoryAxis.gridAlpha = 0;
+        categoryAxis.axisAlpha = 0;
+        categoryAxis.labelsEnabled = false;
+
+        // value
+        var valueAxis = new AmCharts.ValueAxis();
+        valueAxis.gridAlpha = 0;
+        valueAxis.axisAlpha = 0;
+        valueAxis.labelsEnabled = false;
+        valueAxis.minimum = 0;
+        chart.addValueAxis(valueAxis);
+
+        // GRAPH
+        var graph = new AmCharts.AmGraph();
+        graph.balloonText = "[[category]]: [[value]]";
+        graph.valueField = "count";
+        graph.type = "column";
+        graph.lineAlpha = 0;
+        graph.fillAlphas = 0.5;
+        // you can pass any number of colors in array to create more fancy gradients
+        graph.fillColors = ["#000000", "#FF6600"];
+        graph.gradientOrientation = "horizontal";
+        graph.labelPosition = "inside";
+        graph.labelText = "[[category]]: [[value]] ";
+        graph.balloonText = "[[category]]: [[value]] ";
+        chart.addGraph(graph);
+
+        
+        chart.creditsPosition = "bottom-right";
+
+        // WRITE
+        chart.write("chartdivgenre");
+    });
+    
+    function generateGenreData() {
+        <?php 
+            foreach ($genre as $key => $value) {
+                ?>
+                chartGenre.push({
+                    "country": '{{$value["name"]}}',
+                    "count": {{$value['total']}}
+                });
+                <?php
+            }
+        ?>
+    }
+    
     $(document).ready(function(){
         $('#type').change(function(){
             $('#form-filter').submit();
@@ -240,5 +314,10 @@
         <div id="chartdivunique" style="width: 100%; height: 400px;"></div>
     </div>
 </div>
-
+<h3>Top Genre</h3>
+<div class="row">
+    <div class="col-xs-12">
+        <div id="chartdivgenre" style="width: 100%; height: 400px;"></div>
+    </div>
+</div>
 @stop
