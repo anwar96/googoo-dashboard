@@ -61,7 +61,7 @@ class Listener extends \Eloquent {
                 . "LEFT JOIN artist_has_genres ON artists.id = artist_has_genres.`artist_id` "
                 . "LEFT JOIN genres ON genres.id = artist_has_genres.`genre_id` "
                 . "where genres.name IS NOT NULL "
-                . "group by genres.id order by total desc";
+                . "group by genres.id order by total desc limit 0, 15";
         $genre = DB::select($sql);
         return $genre;
     }
