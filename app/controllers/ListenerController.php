@@ -14,12 +14,19 @@ class ListenerController extends BaseController {
             $arlistener[$key]['visits'] = $value->count;
         }
         
-        if (Input::get('type') == 'm'){
+        $unique = Listener::getuniqelistener($start, $end);
+        $arunique = [];
+        foreach ($unique as $key => $value) {
+            $arunique[$key]['date'] = $value->date;
+            $arunique[$key]['visits'] = $value->count;
+        }
+        
+        if (Input::get('type') == 'm' || Input::get('type') == ''){
             $view = 'listener.getIndex';
         }else{
             $view = 'listener.getIndexHourly';
         }
-        return View::make($view)->with('listener', $arlistener);
+        return View::make($view)->with('listener', $arlistener)->with('unique', $arunique);
     }
 
 }
