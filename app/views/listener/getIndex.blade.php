@@ -278,6 +278,7 @@
         graph.balloonText = "[[category]]: [[value]] ";
         chart.addGraph(graph);
 
+        chart.addLabel(50, 40, "Top Genre", "left", 15, "#000000", 0, 1, true);
         
         chart.creditsPosition = "bottom-right";
 
@@ -342,7 +343,6 @@
         <div id="chartdivunique" style="width: 100%; height: 400px;"></div>
     </div>
 </div>
-<h3>Top Genre</h3>
 <div class="row">
     <div class="col-xs-12">
         <div id="chartdivgenre" style="width: 100%; height: 700px;"></div>

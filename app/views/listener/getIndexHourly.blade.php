@@ -250,7 +250,7 @@
         graph.balloonText = "[[category]]: [[value]] ";
         chart.addGraph(graph);
 
-        
+        chart.addLabel(50, 40, "Top Genre", "left", 15, "#000000", 0, 1, true);
         chart.creditsPosition = "bottom-right";
 
         // WRITE
