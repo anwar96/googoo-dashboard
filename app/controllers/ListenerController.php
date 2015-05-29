@@ -21,8 +21,8 @@ class ListenerController extends BaseController {
         $countunique = 0;
         foreach ($unique as $key => $value) {
             $arunique[$key]['date'] = $value->date;
-            $arunique[$key]['visits'] = $value->jml;
-            $countunique = $countunique + $value->jml;
+            $arunique[$key]['visits'] = $value->count;
+            $countunique = $countunique + $value->count;
         }
         
         $genre = Listener::getTopgenre($start, $end);
