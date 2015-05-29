@@ -12,11 +12,11 @@
  */
 
 Route::group(array('before' => 'auth'), function() {
-//    Route::get('/', function() {
-//        $environment = App::environment();
-//        return View::make('master');
-//    });
-    Route::controller('/', 'ListenerController');
+    Route::get('/', function() {
+        $environment = App::environment();
+        return View::make('master');
+    });
+    Route::controller('listener', 'ListenerController');
     Route::controller('artist', 'ArtistController');
     Route::controller('song', 'SongController');
     Route::controller('genre', 'GenreController');
@@ -43,8 +43,8 @@ Route::group(array('before' => 'auth'), function() {
     Route::get('api/similaryear/{year}/artistid/{artist_id}', 'ApiController@similar_year');
 });
 
-Route::get('/login', array('uses' => 'LoginController@showLogin'));
-Route::post('/login', array('uses' => 'LoginController@doLogin'));
-Route::get('/logout', array('uses' => 'LoginController@doLogout'));
+Route::get('login', array('uses' => 'LoginController@showLogin'));
+Route::post('login', array('uses' => 'LoginController@doLogin'));
+Route::get('logout', array('uses' => 'LoginController@doLogout'));
 
 
