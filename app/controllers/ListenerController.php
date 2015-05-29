@@ -9,16 +9,20 @@ class ListenerController extends BaseController {
         
         $listener = Listener::getalllistener($type, $start, $end);
         $arlistener = [];
+        $countlistener = 0;
         foreach ($listener as $key => $value) {
             $arlistener[$key]['date'] = $value->date;
             $arlistener[$key]['visits'] = $value->count;
+            $countlistener = $countlistener + $value->count;
         }
         
         $unique = Listener::getuniqelistener($start, $end);
         $arunique = [];
+        $countunique = 0;
         foreach ($unique as $key => $value) {
             $arunique[$key]['date'] = $value->date;
             $arunique[$key]['visits'] = $value->count;
+            $countunique = $countunique + $value->count;
         }
         
         $genre = Listener::getTopgenre($start, $end);
@@ -33,7 +37,12 @@ class ListenerController extends BaseController {
         }else{
             $view = 'listener.getIndexHourly';
         }
-        return View::make($view)->with('listener', $arlistener)->with('unique', $arunique)->with('genre', $argenre);
+        return View::make($view)
+                ->with('listener', $arlistener)
+                ->with('unique', $arunique)
+                ->with('countlistener', $countlistener)
+                ->with('countunique', $countunique)
+                ->with('genre', $argenre);
     }
 
 }

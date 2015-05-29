@@ -331,13 +331,13 @@
         </form>
     </div>
 </div>
-<h3>Listener</h3>
+<h3>Listener ({{$countlistener}})</h3>
 <div class="row">
     <div class="col-xs-12">
         <div id="chartdiv" style="width: 100%; height: 400px;"></div>
     </div>
 </div>
-<h3>Unique Listener</h3>
+<h3>Unique Listener ({{$countunique}})</h3>
 <div class="row">
     <div class="col-xs-12">
         <div id="chartdivunique" style="width: 100%; height: 400px;"></div>
