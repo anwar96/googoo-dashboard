@@ -321,11 +321,11 @@
             </div>
             <div class="form-group">
               <label for="start">Start</label>
-              <input class="datepicker" type="text" name="start" class="form-control" id="start" placeholder="Start" value="{{Input::get('start')}}">
+              <input class="datepicker" type="text" name="start" class="form-control" id="start" placeholder="Start" value="{{$datestart}}">
             </div>
             <div class="form-group">
               <label for="end">End</label>
-              <input class="datepicker" type="text" name="end" class="form-control" id="end" placeholder="End" value="{{Input::get('end')}}">
+              <input class="datepicker" type="text" name="end" class="form-control" id="end" placeholder="End" value="{{$dateend}}">
             </div>
             <input class="btn btn-primary" type="submit" value="submit" />
         </form>

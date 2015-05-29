@@ -6,15 +6,15 @@ class ListenerController extends BaseController {
         $type = Input::get('type');
         $start = Input::get('start');
         $end = Input::get('end');
-        
-        if ($start == ""){
+
+        if ($start == "") {
             $start = date('Y-m-01');
         }
-        
-        if ($end == ""){
-            $end  = date('Y-m-t');
+
+        if ($end == "") {
+            $end = date('Y-m-t');
         }
-        
+
         $listener = Listener::getalllistener($type, $start, $end);
         $arlistener = [];
         $countlistener = 0;
@@ -23,7 +23,7 @@ class ListenerController extends BaseController {
             $arlistener[$key]['visits'] = $value->count;
             $countlistener = $countlistener + $value->count;
         }
-        
+
         $unique = Listener::getuniqelistener($start, $end);
         $arunique = [];
         $countunique = 0;
@@ -32,25 +32,27 @@ class ListenerController extends BaseController {
             $arunique[$key]['visits'] = $value->count;
             $countunique = $countunique + $value->count;
         }
-        
+
         $genre = Listener::getTopgenre($start, $end);
         $argenre = [];
         foreach ($genre as $key => $value) {
             $argenre[$key]['name'] = $value->name;
             $argenre[$key]['total'] = $value->total;
         }
-        
-        if (Input::get('type') == 'm' || Input::get('type') == ''){
+
+        if (Input::get('type') == 'm' || Input::get('type') == '') {
             $view = 'listener.getIndex';
-        }else{
+        } else {
             $view = 'listener.getIndexHourly';
         }
         return View::make($view)
-                ->with('listener', $arlistener)
-                ->with('unique', $arunique)
-                ->with('countlistener', $countlistener)
-                ->with('countunique', $countunique)
-                ->with('genre', $argenre);
+                        ->with('listener', $arlistener)
+                        ->with('unique', $arunique)
+                        ->with('countlistener', $countlistener)
+                        ->with('countunique', $countunique)
+                        ->with('genre', $argenre)
+                        ->with('datestart', $start)
+                        ->with('dateend', $end);
     }
 
 }
