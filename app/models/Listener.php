@@ -34,9 +34,9 @@ class Listener extends \Eloquent {
         }
 
 
-        $sql = "SELECT DATE( list.created_at ) AS date, SUM( list.jml ) AS count 
+        $sql = "SELECT DATE( list.created_at ) AS date, list.jml
                 FROM (
-                    SELECT facebook_id, COUNT( facebook_id ) AS jml, created_at
+                    SELECT facebook_id, COUNT( id ) AS jml, created_at
                     FROM listeners
                     GROUP BY facebook_id
                 ) AS list " . $between . "
