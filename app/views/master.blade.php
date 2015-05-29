@@ -37,7 +37,7 @@
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-<!--                        <li><a href="{{URL::to('/listener')}}">Listener</a></li>-->
+                        <li><a href="{{URL::to('/statistik')}}">Statistik</a></li>
                         <li><a href="{{URL::to('/artist')}}">Artis</a></li>
                         <li><a href="{{URL::to('/song')}}">Song</a></li>
                         <li><a href="{{URL::to('/genre')}}">Genre</a></li>

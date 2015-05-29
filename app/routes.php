@@ -16,7 +16,7 @@ Route::group(array('before' => 'auth'), function() {
         $environment = App::environment();
         return View::make('master');
     });
-    Route::controller('listener', 'ListenerController');
+    Route::controller('statistik', 'ListenerController');
     Route::controller('artist', 'ArtistController');
     Route::controller('song', 'SongController');
     Route::controller('genre', 'GenreController');
