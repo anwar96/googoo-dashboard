@@ -7,6 +7,14 @@ class ListenerController extends BaseController {
         $start = Input::get('start');
         $end = Input::get('end');
         
+        if ($start == ""){
+            $start = date('Y-m-01');
+        }
+        
+        if ($end == ""){
+            $end  = date('Y-m-t');
+        }
+        
         $listener = Listener::getalllistener($type, $start, $end);
         $arlistener = [];
         $countlistener = 0;
