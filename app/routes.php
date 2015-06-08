@@ -41,6 +41,7 @@ Route::group(array('before' => 'auth'), function() {
     Route::get('api/similarartist/{id}', 'ApiController@similar_artist');
     Route::get('api/similargenre/{id}/artistid/{artist_id}', 'ApiController@similar_genre');
     Route::get('api/similaryear/{year}/artistid/{artist_id}', 'ApiController@similar_year');
+    Route::get('api/likedartist/{id}', 'ApiController@likedartist');
 });
 
 Route::get('login', array('uses' => 'LoginController@showLogin'));

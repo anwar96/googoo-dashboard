@@ -198,6 +198,10 @@
 <div class="modal fade" id="likedMemberModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 
 </div>
+<!-- Modal -->
+<div class="modal fade" id="likedArtistModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+</div>
 
 <!-- Modal -->
 <div class="modal fade" id="similarArtistModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -238,6 +242,10 @@
 
 <script id="hb-likedmember" type="text/x-handlebars-template">
     @include('ruangsiar._likedmember');
+</script>
+
+<script id="hb-likedartist" type="text/x-handlebars-template">
+    @include('ruangsiar._likedartist');
 </script>
 
 <script id="hb-ignore" type="text/x-handlebars-template">

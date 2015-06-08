@@ -242,6 +242,24 @@ class ApiController extends BaseController {
         return Response::json($json);
     }
 
+    function likedartist($id) {
+        $sql = "SELECT a.`fb_band_id`, a.`id`, a.`name` "
+                . "FROM music_interests mi "
+                . "INNER JOIN artists a ON mi.`artist_id` = a.`id` "
+                . "LEFT JOIN rejected_artists ra ON ra.artist_id = a.id "
+                . "WHERE mi.`fb_user_id` = ? "
+                . "AND ra.`id` is NULL "
+                . "AND a.fb_band_id != 0";
+        $results = DB::select($sql, array($id));
+        $result = "";
+        foreach ($results as $key => $value) {
+            $result .= $value->name . ", ";
+        }
+        $json['success'] = true;
+        $json['data'] = $result;
+        return Response::json($json);
+    }
+
     /**
      * Ajax for changing programs
      * 

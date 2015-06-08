@@ -57,7 +57,7 @@ $(function () {
             $(".timeago").timeago();
         });
     }
-    
+
     //change program
     $(".program-change").click(function () {
         var u = $(this).attr('href');
@@ -172,6 +172,19 @@ $(function () {
         $.get('/api/ignore/removeall', function (r) {
             playlist();
             ignoreList();
+        });
+
+        return false;
+    });
+
+    //liked artist
+    $("#listeners-list").on('click', '.btn-liked-member', function () {
+        var id = $(this).attr('data-id');
+        $.get('/api/likedartist/' + id, function (r) {
+            var source = $("#hb-likedartist").html();
+            var template = Handlebars.compile(source);
+            $("#likedArtistModal").html(template(r)).slideDown('slow');
+            $('#likedArtistModal').modal('show');
         });
 
         return false;
