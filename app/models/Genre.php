@@ -13,12 +13,12 @@ class Genre extends \LaravelBook\Ardent\Ardent {
     );
 
     function artists() {
-        return $this->belongsToMany('Artist', 'artist_has_genres')->orderBy('name');
+        return $this->belongsToMany('Artist', 'artist_has_genres')->orderBy('name', 'ASC');
     }
 
     static function getGenres($limit = 10) {
 
-        $genres = self::with('artists')->orderBy('name');
+        $genres = self::with('artists')->orderBy('name', 'ASC');
         if (Input::get('q')) {
             $q = '%' . Input::get('q') . '%';
             $genres->where('name', 'like', $q);
@@ -32,7 +32,7 @@ class Genre extends \LaravelBook\Ardent\Ardent {
     }
     
     static function getGenreByName($name) {
-        $sql = "SELECT * FROM genres WHERE name LIKE '%" . $name . "%'";
+        $sql = "SELECT * FROM genres WHERE name LIKE '%" . $name . "%' order by name ASC";
         $data = DB::select($sql);
         return $data;
     }

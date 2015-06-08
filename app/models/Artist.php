@@ -31,7 +31,7 @@ class Artist extends \LaravelBook\Ardent\Ardent {
                     'artists.*',
                     'rejected_artists.artist_id'
                 ])
-                ->orderBy('modified_at', 'DESC');
+                ->orderBy('name', 'ASC');
         if (Input::get('q')) {
             $q = '%' . Input::get('q') . '%';
             $artists->where('name', 'like', $q);
