@@ -83,8 +83,11 @@ class ApiController extends BaseController {
             }
         }
 
+        $maxValue = max($argenre2);
+        $maxIndex = array_search(max($argenre2), $argenre2);
+
         $json['success'] = true;
-        $json['xx'] = $argenre2;
+        $json['xx'] = $maxIndex;
         $json['data'] = $songs;
         return Response::json($json);
     }
