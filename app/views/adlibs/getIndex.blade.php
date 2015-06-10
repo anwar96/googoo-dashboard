@@ -30,11 +30,11 @@
                 <thead>
                     <tr>
                         <th>Adlibs</th>
-                        <th class="col-xs-3">type</th>
-                        <th class="col-xs-3">genre</th>
+                        <th class="col-xs-1">type</th>
+                        <th class="col-xs-1">genre</th>
                         <th class="col-xs-1">count</th>
                         <th class="col-xs-1">status</th>
-                        <th class="col-xs-2">&nbsp;</th>
+                        <th class="col-xs-1">&nbsp;</th>
                     </tr>
                 </thead>
                 <tbody>

@@ -65,7 +65,7 @@ $(document).ready(function () {
 
             <div class="form-group @if($errors->has('text')) has-error  has-feedback @endif">
                 <label class="control-label" for="text">Text</label>
-                <textarea class="form-control" id="text" name="text">{{Input::old('text', $adlibs->text)}}</textarea>
+                <textarea class="form-control" id="text" name="text">{{Input::old('text', $audiospots->text)}}</textarea>
                 @if($errors->has('text'))
                 <p class="help-block">{{$errors->first('text')}}</p>
                 @endif
@@ -74,7 +74,7 @@ $(document).ready(function () {
 
             <div class="form-group @if($errors->has('genre')) has-error  has-feedback @endif">
                 <label class="control-label" for="genre">genre</label>
-                <input type="input" class="form-control autocomplete" id="genre" placeholder="jika typenya event maka genre diisi dengan none" name="genre" value="{{Input::old('genre', $adlibs->genre)}}">
+                <input type="input" class="form-control autocomplete" id="genre" placeholder="jika typenya event maka genre diisi dengan none" name="genre" value="{{Input::old('genre', $audiospots->genre)}}">
                 @if($errors->has('genre'))
                 <p class="help-block">{{$errors->first('genre')}}</p>
                 @endif
@@ -83,7 +83,7 @@ $(document).ready(function () {
 
             <div class="form-group @if($errors->has('count')) has-error  has-feedback @endif">
                 <label class="control-label" for="count">count</label>
-                <input type="input" class="form-control" id="count" name="count" value="{{Input::old('count', $adlibs->count)}}">
+                <input type="input" class="form-control" id="count" name="count" value="{{Input::old('count', $audiospots->count)}}">
                 @if($errors->has('count'))
                 <p class="help-block">{{$errors->first('count')}}</p>
                 @endif
@@ -91,7 +91,7 @@ $(document).ready(function () {
 
             <div class="form-group @if($errors->has('type')) has-error  has-feedback @endif">
                 <label class="control-label" for="type">type</label>
-                {{ Form::select('type', ["genre" => "genre", "event" => "event"], $adlibs->type, ['class' => 'form-control']) }}
+                {{ Form::select('type', ["genre" => "genre", "event" => "event"], $audiospots->type, ['class' => 'form-control']) }}
                 @if($errors->has('type'))
                 <p class="help-block">{{$errors->first('type')}}</p>
                 @endif
@@ -100,7 +100,7 @@ $(document).ready(function () {
 
             <div class="form-group @if($errors->has('status')) has-error  has-feedback @endif">
                 <label class="control-label" for="status">status</label>
-                {{ Form::select('status', ["active" => "active", "nonactive" => "nonactive"], $adlibs->status, ['class' => 'form-control']) }}
+                {{ Form::select('status', ["active" => "active", "nonactive" => "nonactive"], $audiospots->status, ['class' => 'form-control']) }}
                 @if($errors->has('status'))
                 <p class="help-block">{{$errors->first('status')}}</p>
                 @endif

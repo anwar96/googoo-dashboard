@@ -1,48 +1,48 @@
 <?php
 
-class AdlibsController extends BaseController {
+class AudiospotController extends BaseController {
 
     function getIndex() {
-        $adlibs = Adlibs::orderBy('created_at', 'DESC');
+        $audiospots = Audiospot::orderBy('created_at', 'DESC');
         if (Input::get('q')) {
             $q = '%' . Input::get('q') . '%';
-            $adlibs->where('text', 'like', $q)
-                   ->orWhere('genre', 'like', $q);
+            $audiospots->where('text', 'like', $q)
+                       ->orWhere('genre', 'like', $q);
         }
-        $adlibs = $adlibs->paginate(20);
-        return View::make('adlibs.getIndex')->withAdlibs($adlibs);
+        $audiospots = $audiospots->paginate(20);
+        return View::make('audiospot.getIndex')->withAudiospots($audiospots);
     }
 
     function getEdit($id) {
-        $adlibs = Adlibs::findOrFail($id);
-        return View::make('adlibs.getEdit')->withAdlibs($adlibs);
+        $audiospot = Audiospot::findOrFail($id);
+        return View::make('audiospot.getEdit')->withAudiospots($audiospot);
     }
 
     function postEdit($id) {
-        $adlibs = Adlibs::findOrFail($id);
-        if ($adlibs->save()) {
-            return Redirect::to('/adlibs/')->with('message', 'data has been updated');
+        $audiospots = Audiospot::findOrFail($id);
+        if ($audiospots->save()) {
+            return Redirect::to('/audiospot/')->with('message', 'data has been updated');
         } else {
-            return Redirect::to('/adlibs/edit/' . $id)->withErrors($adlibs->errors());
+            return Redirect::to('/audiospot/edit/' . $id)->withErrors($audiospots->errors());
         }
     }
 
     function getAdd() {
-        return View::make('adlibs.getAdd');
+        return View::make('audiospot.getAdd');
     }
 
     function postAdd() {
-        $adlibs = new Adlibs();
-        if ($adlibs->save()) {
-            return Redirect::to('/adlibs/')->with('message', 'data has been updated');
+        $audiospots = new Audiospot();
+        if ($audiospots->save()) {
+            return Redirect::to('/audiospot/')->with('message', 'data has been updated');
         } else {
-            return Redirect::to('/adlibs/edit/' . $adlibs->id)->withErrors($adlibs->errors());
+            return Redirect::to('/audiospot/edit/' . $audiospots->id)->withErrors($audiospots->errors());
         }
     }
 
     public function getDelete($id) {
-        $adlibs = Adlibs::findOrFail($id);
-        $adlibs->delete();
-        return Redirect::to('/adlibs/')->with('message', 'data has been deleted');
+        $audiospots = Audiospot::findOrFail($id);
+        $audiospots->delete();
+        return Redirect::to('/audiospot/')->with('message', 'data has been deleted');
     }
 }

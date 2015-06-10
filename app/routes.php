@@ -1,18 +1,18 @@
 <?php
 
 /*
-  |--------------------------------------------------------------------------
-  | Application Routes
-  |--------------------------------------------------------------------------
-  |
-  | Here is where you can register all of the routes for an application.
-  | It's a breeze. Simply tell Laravel the URIs it should respond to
-  | and give it the Closure to execute when that URI is requested.
-  |
+|--------------------------------------------------------------------------
+| Application Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register all of the routes for an application.
+| It's a breeze. Simply tell Laravel the URIs it should respond to
+| and give it the Closure to execute when that URI is requested.
+|
  */
 
-Route::group(array('before' => 'auth'), function() {
-    Route::get('/', function() {
+Route::group(array('before' => 'auth'), function () {
+    Route::get('/', function () {
         $environment = App::environment();
         return View::make('master');
     });
@@ -24,6 +24,7 @@ Route::group(array('before' => 'auth'), function() {
     Route::resource('banner', 'BannerResource');
     Route::resource('program', 'ProgramResource');
     Route::controller('adlibs', 'AdlibsController');
+    Route::controller('audiospot', 'AudiospotController');
 
     //API
     Route::get('api/playlist', 'ApiController@playlist');
@@ -48,5 +49,3 @@ Route::group(array('before' => 'auth'), function() {
 Route::get('login', array('uses' => 'LoginController@showLogin'));
 Route::post('login', array('uses' => 'LoginController@doLogin'));
 Route::get('logout', array('uses' => 'LoginController@doLogout'));
-
-

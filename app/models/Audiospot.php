@@ -1,10 +1,11 @@
 <?php
 
-class Adlibs extends \LaravelBook\Ardent\Ardent {
+class Audiospot extends \LaravelBook\Ardent\Ardent {
 
     protected $guarded = ['id'];
     public static $rules = array(
         'text' => 'required',
+        'type' => 'required',
         'genre' => 'required',
         'status' => 'required',
         'count' => 'required',

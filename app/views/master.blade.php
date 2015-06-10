@@ -44,6 +44,7 @@
                         <li><a href="{{URL::to('/banner')}}">Banner</a></li>
                         <li><a href="{{URL::to('/program')}}">Program</a></li>
                         <li><a href="{{URL::to('/adlibs')}}">Adlibs</a></li>
+                        <li><a href="{{URL::to('/audiospot')}}">Audio Spot</a></li>
 
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
@@ -58,7 +59,7 @@
 
             @yield('content')
 
-        </div> 
+        </div>
 
         <footer>
             <div class="container">
