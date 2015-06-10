@@ -68,7 +68,7 @@ class ApiController extends BaseController {
                 $vals = array_count_values($argenre);
                 foreach ($vals as $key => $v) {
                     if ($key != "") {
-                        if (in_array($key, $argenre2)) {
+                        if (array_key_exists($key, $argenre2)) {
                             $argenre2[$key] = $argenre2[$key] + $v;
                         } else {
                             $argenre2[$key] = $v;
