@@ -10,14 +10,13 @@ class ApiController extends BaseController {
         $date = date('Y-m-d');
         $program = Program::where('is_active', 'true')->first();
 
-
         $sql = "
-            SELECT `music_interests`.`artist_id`, count(facebook_id) as total, 
+            SELECT `music_interests`.`artist_id`, count(facebook_id) as total,
             MAX(listeners.created_at) as last, `artists`.`name`
             FROM `listeners`
                 INNER JOIN `music_interests` ON `music_interests`.`fb_user_id`=`listeners`.`facebook_id`
                 INNER JOIN `artists` ON `artists`.`id`=`music_interests`.`artist_id`
-            WHERE 
+            WHERE
                 `listeners`.`program_id` = ?
                 AND DATE(listeners.created_at) = ?
                 AND `artists`.`name` IS NOT NULL
@@ -29,24 +28,25 @@ class ApiController extends BaseController {
         $results = DB::select($sql, array($program->id, $date));
 
         $songs = array();
+        $argenre2 = [];
         foreach ($results as $i) {
 
             $allsongs = Song::where('artist_id', $i->artist_id)
-                    ->leftJoin('genres', function($join) {
-                        $join->on('songs.genre_id', '=', 'genres.id');
-                    })->select([
-                        'songs.*',
-                        'genres.id',
-                        'genres.name'
-                    ])
-                    ->whereRaw('bpm BETWEEN ' . $program->min_bpm . ' AND ' . $program->max_bpm, array())
-                    ->limit(5)
-                    ->get();
+                ->leftJoin('genres', function ($join) {
+                    $join->on('songs.genre_id', '=', 'genres.id');
+                })->select([
+                'songs.*',
+                'genres.id',
+                'genres.name',
+            ])
+                ->whereRaw('bpm BETWEEN ' . $program->min_bpm . ' AND ' . $program->max_bpm, array())
+                ->limit(5)
+                ->get();
 
             $sql = "SELECT m.id, m.name "
-                    . "FROM listeners m INNER JOIN music_interests mi "
-                    . "ON mi.`fb_user_id` = m.`facebook_id`"
-                    . "WHERE mi.`artist_id` = ? and m.`program_id` = ? AND DATE(m.created_at) = ?";
+            . "FROM listeners m INNER JOIN music_interests mi "
+            . "ON mi.`fb_user_id` = m.`facebook_id`"
+            . "WHERE mi.`artist_id` = ? and m.`program_id` = ? AND DATE(m.created_at) = ?";
             $likedmember = DB::select($sql, array($i->artist_id, $program->id, $date));
 
             if ($allsongs->toArray()) {
@@ -58,30 +58,50 @@ class ApiController extends BaseController {
                 $song['last'] = $i->last;
                 $song['songs'] = $allsongs->toArray();
                 $songs[] = $song;
+
+                $argenre = [];
+                foreach ($allsongs as $key => $s) {
+                    //echo $s->genre;
+                    $argenre[$key] = strtolower($s->name);
+                }
+
+                $vals = array_count_values($argenre);
+                foreach ($vals as $key => $v) {
+                    if ($key != "") {
+                        if (in_array($key, $argenre2)) {
+                            $argenre2[$key] = $argenre2[$key] + $v;
+                        } else {
+                            $argenre2[$key] = $v;
+                        }
+                    }
+
+                }
             }
 
             if (count($songs) > 9) {
                 break;
             }
         }
+
         $json['success'] = true;
+        $json['xx'] = $argenre2;
         $json['data'] = $songs;
         return Response::json($json);
     }
 
     function hitslist() {
         $songs = array();
-        $allsongs = Song::leftJoin('genres', function($join) {
-                    $join->on('songs.genre_id', '=', 'genres.id');
-                })->Join('hits_charts', function($join) {
-                    $join->on('songs.id', '=', 'hits_charts.song_id');
-                })->select([
-                    'songs.*',
-                    'genres.id',
-                    'genres.name'
-                ])->limit(5)
-                ->orderByRaw("RAND()")
-                ->get();
+        $allsongs = Song::leftJoin('genres', function ($join) {
+            $join->on('songs.genre_id', '=', 'genres.id');
+        })->Join('hits_charts', function ($join) {
+              $join->on('songs.id', '=', 'hits_charts.song_id');
+          })->select([
+            'songs.*',
+            'genres.id',
+            'genres.name',
+        ])->limit(5)
+          ->orderByRaw("RAND()")
+          ->get();
 
         if ($allsongs->toArray()) {
             $songs = $allsongs->toArray();
@@ -98,17 +118,17 @@ class ApiController extends BaseController {
 
     function getnewsong() {
         $songs = array();
-        $allsongs = Song::leftJoin('genres', function($join) {
-                    $join->on('songs.genre_id', '=', 'genres.id');
-                })->Join('newsongs', function($join) {
-                    $join->on('songs.id', '=', 'newsongs.song_id');
-                })->select([
-                    'songs.*',
-                    'genres.id',
-                    'genres.name'
-                ])->limit(5)
-                ->orderByRaw("RAND()")
-                ->get();
+        $allsongs = Song::leftJoin('genres', function ($join) {
+            $join->on('songs.genre_id', '=', 'genres.id');
+        })->Join('newsongs', function ($join) {
+              $join->on('songs.id', '=', 'newsongs.song_id');
+          })->select([
+            'songs.*',
+            'genres.id',
+            'genres.name',
+        ])->limit(5)
+          ->orderByRaw("RAND()")
+          ->get();
 
         if ($allsongs->toArray()) {
             $songs = $allsongs->toArray();
@@ -127,12 +147,11 @@ class ApiController extends BaseController {
         $date = date('Y-m-d');
         $program = Program::where('is_active', 'true')->first();
 
-
         $sql = "
             SELECT `artists`.`id`, `artists`.`name`
             FROM `similar_artists`
                 INNER JOIN `artists` ON `similar_artists`.`similar_artist_id`=`artists`.`id`
-            WHERE 
+            WHERE
                 `similar_artists`.`artist_id` = ?
         ";
 
@@ -142,9 +161,9 @@ class ApiController extends BaseController {
         foreach ($results as $i) {
 
             $allsongs = Song::where('artist_id', $i->id)
-                    ->whereRaw('bpm BETWEEN ' . $program->min_bpm . ' AND ' . $program->max_bpm, array())
-                    ->limit(5)
-                    ->get();
+                ->whereRaw('bpm BETWEEN ' . $program->min_bpm . ' AND ' . $program->max_bpm, array())
+                ->limit(5)
+                ->get();
 
             if ($allsongs->toArray()) {
                 $song['id'] = $i->id;
@@ -169,17 +188,17 @@ class ApiController extends BaseController {
 
         $songs = array();
         $allsongs = Song::where('genre_id', $id)
-                ->where('artist_id', '!=', $artist_id)
-                ->leftJoin('genres', function($join) {
-                    $join->on('songs.genre_id', '=', 'genres.id');
-                })->select([
-                    'songs.*',
-                    'genres.id',
-                    'genres.name'
-                ])->whereRaw('bpm BETWEEN ' . $program->min_bpm . ' AND ' . $program->max_bpm, array())
-                ->limit(10)
-                ->orderByRaw("RAND()")
-                ->get();
+            ->where('artist_id', '!=', $artist_id)
+            ->leftJoin('genres', function ($join) {
+                $join->on('songs.genre_id', '=', 'genres.id');
+            })->select([
+            'songs.*',
+            'genres.id',
+            'genres.name',
+        ])->whereRaw('bpm BETWEEN ' . $program->min_bpm . ' AND ' . $program->max_bpm, array())
+            ->limit(10)
+            ->orderByRaw("RAND()")
+            ->get();
 
         if ($allsongs->toArray()) {
             $songs = $allsongs->toArray();
@@ -200,17 +219,17 @@ class ApiController extends BaseController {
 
         $songs = array();
         $allsongs = Song::where('release_year', $year)
-                ->where('artist_id', '!=', $artist_id)
-                ->leftJoin('genres', function($join) {
-                    $join->on('songs.genre_id', '=', 'genres.id');
-                })->select([
-                    'songs.*',
-                    'genres.id',
-                    'genres.name'
-                ])->whereRaw('bpm BETWEEN ' . $program->min_bpm . ' AND ' . $program->max_bpm, array())
-                ->limit(10)
-                ->orderByRaw("RAND()")
-                ->get();
+            ->where('artist_id', '!=', $artist_id)
+            ->leftJoin('genres', function ($join) {
+                $join->on('songs.genre_id', '=', 'genres.id');
+            })->select([
+            'songs.*',
+            'genres.id',
+            'genres.name',
+        ])->whereRaw('bpm BETWEEN ' . $program->min_bpm . ' AND ' . $program->max_bpm, array())
+            ->limit(10)
+            ->orderByRaw("RAND()")
+            ->get();
 
         if ($allsongs->toArray()) {
             $songs = $allsongs->toArray();
@@ -229,9 +248,9 @@ class ApiController extends BaseController {
         $date = date('Y-m-d');
         $program = Program::where('is_active', 'true')->first();
         $sql = "SELECT m.id, m.name "
-                . "FROM listeners m INNER JOIN music_interests mi "
-                . "ON mi.`fb_user_id` = m.`facebook_id`"
-                . "WHERE mi.`artist_id` = ? and m.`program_id` = ? AND DATE(m.created_at) = ?";
+        . "FROM listeners m INNER JOIN music_interests mi "
+        . "ON mi.`fb_user_id` = m.`facebook_id`"
+        . "WHERE mi.`artist_id` = ? and m.`program_id` = ? AND DATE(m.created_at) = ?";
         $results = DB::select($sql, array($id, $program->id, $date));
         $result = "";
         foreach ($results as $key => $value) {
@@ -244,12 +263,12 @@ class ApiController extends BaseController {
 
     function likedartist($id) {
         $sql = "SELECT a.`fb_band_id`, a.`id`, a.`name` "
-                . "FROM music_interests mi "
-                . "INNER JOIN artists a ON mi.`artist_id` = a.`id` "
-                . "LEFT JOIN rejected_artists ra ON ra.artist_id = a.id "
-                . "WHERE mi.`fb_user_id` = ? "
-                . "AND ra.`id` is NULL "
-                . "AND a.fb_band_id != 0";
+        . "FROM music_interests mi "
+        . "INNER JOIN artists a ON mi.`artist_id` = a.`id` "
+        . "LEFT JOIN rejected_artists ra ON ra.artist_id = a.id "
+        . "WHERE mi.`fb_user_id` = ? "
+        . "AND ra.`id` is NULL "
+        . "AND a.fb_band_id != 0";
         $results = DB::select($sql, array($id));
         $result = "";
         foreach ($results as $key => $value) {
@@ -262,15 +281,15 @@ class ApiController extends BaseController {
 
     /**
      * Ajax for changing programs
-     * 
+     *
      * GET /api/program/change/{id}
      * @param int $id
      * @return json
      */
     public function programChange($id) {
         DB::table('programs')
-                ->where('is_active', 'true')
-                ->update(array('is_active' => 'false'));
+            ->where('is_active', 'true')
+            ->update(array('is_active' => 'false'));
 
         $program = Program::find($id);
         $program->is_active = 'true';
@@ -284,35 +303,35 @@ class ApiController extends BaseController {
     public function listeners($id) {
         $date = date('Y-m-d');
         $sql = "
-        SELECT * FROM `listeners` 
-        WHERE 
-            `program_id` = '2' 
-            and DATE(created_at) = '2014-09-25' 
-            ORDER BY `created_at` DESC           
+        SELECT * FROM `listeners`
+        WHERE
+            `program_id` = '2'
+            and DATE(created_at) = '2014-09-25'
+            ORDER BY `created_at` DESC
         ";
         $listeners = Listener::where('program_id', $id)
-                ->whereRaw('DATE(created_at) = ?', array($date))
-                ->orderBy('created_at', 'DESC')
-                ->get();
+            ->whereRaw('DATE(created_at) = ?', array($date))
+            ->orderBy('created_at', 'DESC')
+            ->get();
         return Response::json(array('data' => $listeners));
     }
 
     public function nosong($programID) {
         $date = App::environment() == 'local' ? '2014-09-25' : date('Y-m-d');
         $sql = "
-            SELECT 
+            SELECT
                 a.id,a.name,count(*) as total
             FROM listeners l
                 LEFT JOIN music_interests mi ON mi.fb_user_id = l.facebook_id
                 LEFT JOIN artists a ON a.id = mi.artist_id
                 LEFT JOIN songs s ON s.artist_id = mi.artist_id
-            WHERE 
+            WHERE
                 l.program_id = ?
-                AND DATE(l.created_at) = ? 
+                AND DATE(l.created_at) = ?
                 AND a.name IS NOT  NULL
                 AND s.title IS NULL
             GROUP BY a.id
-            ORDER BY total DESC  
+            ORDER BY total DESC
             LIMIT 10
         ";
         $results = DB::select($sql, array($programID, $date));
@@ -321,8 +340,8 @@ class ApiController extends BaseController {
 
     public function ignoreList() {
         $ignore = Ignore::with('artist')
-                ->orderBy('created_at')
-                ->get();
+            ->orderBy('created_at')
+            ->get();
         return Response::json(array('data' => $ignore->toArray()));
     }
 
