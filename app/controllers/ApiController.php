@@ -62,7 +62,7 @@ class ApiController extends BaseController {
                 $argenre = [];
                 foreach ($allsongs as $key => $s) {
                     //echo $s->genre;
-                    $argenre[$key] = strtolower($s->name);
+                    $argenre[$key] = strtolower(trim($s->name));
                 }
 
                 $vals = array_count_values($argenre);
