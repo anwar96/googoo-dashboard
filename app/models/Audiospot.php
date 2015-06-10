@@ -6,7 +6,6 @@ class Adlibs extends \LaravelBook\Ardent\Ardent {
     public static $rules = array(
         'text' => 'required',
         'genre' => 'required',
-        'type' => 'required',
         'status' => 'required',
         'count' => 'required',
     );

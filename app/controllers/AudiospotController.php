@@ -7,8 +7,7 @@ class AdlibsController extends BaseController {
         if (Input::get('q')) {
             $q = '%' . Input::get('q') . '%';
             $adlibs->where('text', 'like', $q)
-                   ->orWhere('genre', 'like', $q)
-                   ->orWhere('type', 'like', $q);
+                   ->orWhere('genre', 'like', $q);
         }
         $adlibs = $adlibs->paginate(20);
         return View::make('adlibs.getIndex')->withAdlibs($adlibs);
