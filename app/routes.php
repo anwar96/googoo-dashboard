@@ -23,6 +23,7 @@ Route::group(array('before' => 'auth'), function () {
     Route::controller('ruangsiar', 'RuangsiarController');
     Route::resource('banner', 'BannerResource');
     Route::resource('program', 'ProgramResource');
+    Route::controller('client', 'ClientController');
     Route::controller('adlibs', 'AdlibsController');
     Route::controller('audiospot', 'AudiospotController');
 

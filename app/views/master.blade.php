@@ -43,6 +43,7 @@
                         <li><a href="{{URL::to('/genre')}}">Genre</a></li>
                         <li><a href="{{URL::to('/banner')}}">Banner</a></li>
                         <li><a href="{{URL::to('/program')}}">Program</a></li>
+                        <li><a href="{{URL::to('/client')}}">Client</a></li>
                         <li><a href="{{URL::to('/adlibs')}}">Adlibs</a></li>
                         <li><a href="{{URL::to('/audiospot')}}">Audio Spot</a></li>
 
