@@ -261,6 +261,7 @@ class ApiController extends BaseController {
         }
         $queries = DB::getQueryLog();
         $last_query = end($queries);
+        print_r($last_query);
         $json['success'] = true;
         $json['data'] = $result;
         return Response::json($json);
