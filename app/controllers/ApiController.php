@@ -319,7 +319,6 @@ class ApiController extends BaseController {
             ->whereRaw('DATE(created_at) = ?', array($date))
             ->orderBy('created_at', 'DESC')
             ->get();
-        print_r($listeners);
         return Response::json(array('data' => $listeners));
     }
 
