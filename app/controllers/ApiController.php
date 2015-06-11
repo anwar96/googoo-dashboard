@@ -259,9 +259,9 @@ class ApiController extends BaseController {
         foreach ($results as $key => $value) {
             $result .= $value->name . ", ";
         }
-        $queries = DB::getQueryLog();
-        $last_query = end($queries);
-        print_r($last_query);
+        // $queries = DB::getQueryLog();
+        // $last_query = end($queries);
+        // print_r($last_query);
         $json['success'] = true;
         $json['data'] = $result;
         return Response::json($json);
@@ -319,6 +319,7 @@ class ApiController extends BaseController {
             ->whereRaw('DATE(created_at) = ?', array($date))
             ->orderBy('created_at', 'DESC')
             ->get();
+        print_r($listeners);
         return Response::json(array('data' => $listeners));
     }
 
