@@ -274,6 +274,9 @@ class ApiController extends BaseController {
         foreach ($results as $key => $value) {
             $result .= $value->name . ", ";
         }
+        $queries = DB::getQueryLog();
+        $last_query = end($queries);
+        print_r($last_query);
         $json['success'] = true;
         $json['data'] = $result;
         return Response::json($json);
