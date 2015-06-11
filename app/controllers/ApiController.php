@@ -259,6 +259,8 @@ class ApiController extends BaseController {
         foreach ($results as $key => $value) {
             $result .= $value->name . ", ";
         }
+        $queries = DB::getQueryLog();
+        $last_query = end($queries);
         $json['success'] = true;
         $json['data'] = $result;
         return Response::json($json);
@@ -268,15 +270,15 @@ class ApiController extends BaseController {
         $sql = "SELECT a.`fb_band_id`, a.`id`, a.`name` "
         . "FROM music_interests mi "
         . "INNER JOIN artists a ON mi.`artist_id` = a.`id` "
-        . "WHERE mi.`fb_user_id` = ? ";
+        . "LEFT JOIN rejected_artists ra ON ra.artist_id = a.id "
+        . "WHERE mi.`fb_user_id` = ? "
+        . "AND ra.`id` is NULL "
+        . "AND a.fb_band_id != 0";
         $results = DB::select($sql, array($id));
         $result = "";
         foreach ($results as $key => $value) {
             $result .= $value->name . ", ";
         }
-        $queries = DB::getQueryLog();
-        $last_query = end($queries);
-        print_r($last_query);
         $json['success'] = true;
         $json['data'] = $result;
         return Response::json($json);
