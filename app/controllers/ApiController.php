@@ -316,6 +316,10 @@ class ApiController extends BaseController {
             ->whereRaw('DATE(created_at) = ?', array($date))
             ->orderBy('created_at', 'DESC')
             ->get();
+
+        foreach ($listeners as $r) {
+            $r->facebook_id = (string) $r->facebook_id;
+        }
         return Response::json(array('data' => $listeners));
     }
 
