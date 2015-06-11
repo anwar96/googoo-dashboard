@@ -9,7 +9,7 @@ class Genre extends \LaravelBook\Ardent\Ardent {
 
     protected $guarded = ['id'];
     public static $rules = array(
-        'name' => 'required'
+        'name' => 'required',
     );
 
     function artists() {
@@ -30,7 +30,7 @@ class Genre extends \LaravelBook\Ardent\Ardent {
     function scopeOfSlug($query, $slug) {
         return $query->where('slug', '=', trim($slug));
     }
-    
+
     static function getGenreByName($name) {
         $sql = "SELECT * FROM genres WHERE name LIKE '%" . $name . "%' order by name ASC";
         $data = DB::select($sql);

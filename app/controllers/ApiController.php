@@ -270,8 +270,7 @@ class ApiController extends BaseController {
         . "INNER JOIN artists a ON mi.`artist_id` = a.`id` "
         . "LEFT JOIN rejected_artists ra ON ra.artist_id = a.id "
         . "WHERE mi.`fb_user_id` = ? "
-        . "AND ra.`id` is NULL "
-        . "AND a.fb_band_id != 0";
+        . "AND ra.`id` is NULL ";
         $results = DB::select($sql, array($id));
         $result = "";
         foreach ($results as $key => $value) {
