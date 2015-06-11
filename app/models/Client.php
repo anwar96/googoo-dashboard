@@ -12,4 +12,10 @@ class Client extends \LaravelBook\Ardent\Ardent {
     );
     public $autoHydrateEntityFromInput = true; // hydrates on new entries' validation
     public $forceEntityHydrationFromInput = true;
+
+    static function getClientByName($name) {
+        $sql = "SELECT * FROM clients WHERE nama LIKE '%" . $name . "%'";
+        $data = DB::select($sql);
+        return $data;
+    }
 }

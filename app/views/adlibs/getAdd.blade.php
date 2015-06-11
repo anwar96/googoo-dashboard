@@ -52,6 +52,22 @@ $(document).ready(function () {
           return false;
         }
       });
+
+    $('.client').autocomplete({
+        source: "{{URL::to('client/clientlist')}}",
+        minLength: 2,
+        select: function (event, data) {
+            detail = data.item;
+            $('.client_id').val(detail.data);
+        },
+        response: function (event, ui) {
+            if (ui.content == null) {
+                var noResult = {value: "No results found", label: "No results found"};
+                ui.content = noResult;
+                console.log(ui);
+            }
+        }
+    });
 });
 </script>
 @stop
@@ -62,6 +78,16 @@ $(document).ready(function () {
 
     <div class="col-xs-6">
         <form role="form" action="{{URL::current()}}" method="POST">
+
+            <div class="form-group @if($errors->has('client_id')) has-error  has-feedback @endif">
+                <label class="control-label" for="client">client</label>
+                <input type="input" class="form-control client" id="client" name="client" value="{{Input::old('client')}}">
+                <input type="hidden" class="client_id" name="client_id" value="{{Input::old('client_id')}}"/>
+                @if($errors->has('client_id'))
+                <p class="help-block">{{$errors->first('client_id')}}</p>
+                @endif
+            </div>
+
             <div class="form-group @if($errors->has('text')) has-error  has-feedback @endif">
                 <label class="control-label" for="text">Text</label>
                 <textarea class="form-control" id="text" name="text">{{Input::old('text')}}</textarea>
@@ -110,7 +136,4 @@ $(document).ready(function () {
         </form>
     </div>
 </div>
-@if($errors->all())
-{{s($errors->all())}}
-@endif
 @stop

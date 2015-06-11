@@ -47,4 +47,21 @@ class ClientController extends BaseController {
         $client->delete();
         return Redirect::to('/client/')->with('message', 'data has been deleted');
     }
+
+    function getClientlist() {
+        $term = trim(strip_tags($_GET['term']));
+        $all_client = Client::getClientByName($term);
+        if (!empty($all_client)) {
+            foreach ($all_client as $value) {
+                $row['value'] = htmlentities(stripslashes($value->nama));
+                $row['data'] = $value->id;
+                $row_set[] = $row; //build an array
+            }
+        } else {
+            $row['value'] = htmlentities(stripslashes('Tidak ditemukan, klik + untuk tambahkan ke database?'));
+            $row['data'] = 0;
+            $row_set[] = $row; //build an array
+        }
+        return Response::json($row_set);
+    }
 }

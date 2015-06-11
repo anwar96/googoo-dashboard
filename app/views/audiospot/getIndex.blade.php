@@ -30,17 +30,19 @@
                 <thead>
                     <tr>
                         <th>audio spot</th>
-                        <th class="col-xs-1">type</th>
-                        <th class="col-xs-1">genre</th>
-                        <th class="col-xs-1">count</th>
-                        <th class="col-xs-1">status</th>
-                        <th class="col-xs-1">&nbsp;</th>
+                        <th>client</th>
+                        <th>type</th>
+                        <th>genre</th>
+                        <th>count</th>
+                        <th>status</th>
+                        <th>&nbsp;</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($audiospots as $lib)
                     <tr>
                         <td><p>{{$lib->text}}</p></td>
+                        <td>{{$lib->nama.", ".$lib->instansi}}</td>
                         <td>{{$lib->type}}</td>
                         <td>{{($lib->type == 'genre') ? $lib->genre : ""}}</td>
                         <td>{{$lib->count}} x</td>
