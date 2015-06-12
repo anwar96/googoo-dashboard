@@ -98,7 +98,7 @@
                     <thead>
                         <tr>
                             <th>Client</th>
-                            <th>Adlibs</th>
+                            <th class="col-xs-4">Adlibs</th>
                             <th>Genre</th>
                             <th>Sisa</th>
                             <th>&nbsp;</th>
