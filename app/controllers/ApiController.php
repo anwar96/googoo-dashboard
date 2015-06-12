@@ -427,4 +427,23 @@ class ApiController extends BaseController {
         return Response::json($json);
     }
 
+    function updateadlibs($id) {
+        $adlibs = Adlibs::findOrFail($id);
+        $adlibs->count = $adlibs->count - 1;
+        if ($adlibs->count <= 0) {
+            $adlibs->status = 'nonactive';
+        }
+        if ($adlibs->save()) {
+            $logs = new Adlibslog();
+            $logs->adlibs_id = $id;
+            $logs->save();
+
+            $json['success'] = true;
+        } else {
+            $json['success'] = false;
+        }
+
+        return Response::json($json);
+    }
+
 }

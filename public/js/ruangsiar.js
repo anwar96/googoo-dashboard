@@ -208,4 +208,13 @@ $(function () {
 
         return false;
     });
+
+    $(".btn-click-adlibs").click(function(){
+        var id = $(this).attr('data-id');
+        $.get('/api/updateadlibs/' + id, function (r) {
+            playlist();
+        });
+
+        return false; 
+    });
 });

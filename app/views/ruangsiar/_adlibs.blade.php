@@ -4,6 +4,6 @@
     <td>@{{genre}}</td>
     <td>@{{count}}</td>
     <td>
-		<button class="btn btn-xs btn-danger btn-ignore" data-id="@{{id}}">done</button>
+		<button class="btn btn-xs btn-primary btn-click-adlibs" data-id="@{{id}}">done</button>
     </td>
 </tr>
