@@ -84,7 +84,7 @@
                 </table>
             </div>
         </div>
-
+        <h3>Top Genre <span id="topgenre"></span></h3>
         <div class="panel panel-default">
             <div class="panel-heading">
                 Adlibs

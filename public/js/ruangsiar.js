@@ -29,6 +29,7 @@ $(function () {
             var template = Handlebars.compile(source);
             $("#playlist").html(template(r)).slideDown('slow');
             $("#text-reload-crowd").html('reload');
+            $("#topgenre").html(r.genre);
             adlibs(r.genre);
         });
     }

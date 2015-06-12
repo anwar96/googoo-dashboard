@@ -1,6 +1,6 @@
 <tr>
     <td>@{{nama}}, @{{instansi}}</td>
-    <td>@{{text}}</td>
+    <td><strong>@{{text}}</strong></td>
     <td>@{{genre}}</td>
     <td>@{{count}}</td>
     <td>
