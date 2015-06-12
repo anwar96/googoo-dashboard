@@ -16,13 +16,13 @@
     <div class="col-xs-8">
         <div class="panel panel-default">
             <div class="panel-heading">
-                Crowd Songs 
+                Crowd Songs
                 <a class="btn btn-primary btn-xs pull-right" id="btn-reload-crowd">
-                    <i class="glyphicon glyphicon-refresh"></i> 
+                    <i class="glyphicon glyphicon-refresh"></i>
                     <span id="text-reload-crowd">reload</span>
                 </a>
             </div>
-            <div style="max-height: 500px;overflow-y: auto">
+            <div style="max-height: 350px;overflow-y: auto">
                 <table class="table">
                     <thead>
                         <tr>
@@ -40,9 +40,9 @@
         </div>
         <div class="panel panel-default">
             <div class="panel-heading">
-                Hits Songs 
+                Hits Songs
                 <a class="btn btn-primary btn-xs pull-right" id="btn-reload-hits">
-                    <i class="glyphicon glyphicon-refresh"></i> 
+                    <i class="glyphicon glyphicon-refresh"></i>
                     <span id="text-reload-hits">reload</span>
                 </a>
             </div>
@@ -63,9 +63,9 @@
         </div>
         <div class="panel panel-default">
             <div class="panel-heading">
-                New Songs 
+                New Songs
                 <a class="btn btn-primary btn-xs pull-right" id="btn-reload-new">
-                    <i class="glyphicon glyphicon-refresh"></i> 
+                    <i class="glyphicon glyphicon-refresh"></i>
                     <span id="text-reload-new">reload</span>
                 </a>
             </div>
@@ -109,8 +109,8 @@
                 <div id="program-current">
                     <h4 id="current-program-name" data-id="{{$currentProgram->id}}">{{$currentProgram->name}}</h4>
                     <p>
-                        BPM 
-                        <span  id="current-program-minbpm">{{$currentProgram->min_bpm}}</span> - 
+                        BPM
+                        <span  id="current-program-minbpm">{{$currentProgram->min_bpm}}</span> -
                         <span  id="current-program-maxbpm">{{$currentProgram->max_bpm}}</span>
                     </p>
                     <p>
@@ -124,7 +124,7 @@
                 <div class="pull-right action-buttons">
                     <div class="btn-group pull-right">
                         <a href="{{URL::to('/api/ignore/list')}}" class="btn btn-primary btn-xs pull-right" id="btn-reload-ignore">
-                            <i class="glyphicon glyphicon-refresh"></i> 
+                            <i class="glyphicon glyphicon-refresh"></i>
                             <span id="text-reload-ignore"></span>
                         </a>&nbsp;
                         <a href="{{URL::to('/api/ignore/removeall')}}" class="btn btn-danger btn-xs pull-right" id="btn-delete-ignore">
@@ -150,7 +150,7 @@
                 <div class="pull-right action-buttons">
                     <div class="btn-group pull-right">
                         <a href="{{URL::to('/api/listeners/'.$currentProgram->id)}}" class="btn btn-primary btn-xs pull-right" id="btn-reload-connected-user">
-                            <i class="glyphicon glyphicon-refresh"></i> 
+                            <i class="glyphicon glyphicon-refresh"></i>
                             <span id="text-reload-connected-user"></span>
                         </a>
                     </div>
