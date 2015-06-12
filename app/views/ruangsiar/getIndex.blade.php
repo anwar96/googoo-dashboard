@@ -97,8 +97,8 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th class="col-xs-1">Client</th>
-                            <th class="col-xs-4">Adlibs</th>
+                            <th>Client</th>
+                            <th>Adlibs</th>
                             <th>Genre</th>
                             <th>Sisa</th>
                             <th>&nbsp;</th>
