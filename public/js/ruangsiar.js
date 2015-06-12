@@ -4,6 +4,13 @@ $(function () {
     hitslist();
     newsong();
 
+    setInterval(function() {
+        connectedUser();
+        ignoreList();
+        hitslist();
+        newsong();
+    }, 30000);
+
     function ignoreList() {
         $.get('/api/ignore/list', function (r) {
             var source = $("#hb-ignore").html();
