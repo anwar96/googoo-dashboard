@@ -40,7 +40,7 @@ class ApiController extends BaseController {
                 'genres.name',
             ])
                 ->whereRaw('bpm BETWEEN ' . $program->min_bpm . ' AND ' . $program->max_bpm, array())
-                ->limit(5)
+                ->limit(3)
                 ->get();
 
             $sql = "SELECT m.id, m.name "
@@ -102,7 +102,7 @@ class ApiController extends BaseController {
             'songs.*',
             'genres.id',
             'genres.name',
-        ])->limit(5)
+        ])->limit(3)
           ->orderByRaw("RAND()")
           ->get();
 
@@ -129,7 +129,7 @@ class ApiController extends BaseController {
             'songs.*',
             'genres.id',
             'genres.name',
-        ])->limit(5)
+        ])->limit(3)
           ->orderByRaw("RAND()")
           ->get();
 
