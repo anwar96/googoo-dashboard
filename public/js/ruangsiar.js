@@ -209,7 +209,7 @@ $(function () {
         return false;
     });
 
-    $(".btn-click-adlibs").click(function(){
+    $("#adlibs").on('click', '.btn-click-adlibs', function () {
         var id = $(this).attr('data-id');
         $.get('/api/updateadlibs/' + id, function (r) {
             playlist();
