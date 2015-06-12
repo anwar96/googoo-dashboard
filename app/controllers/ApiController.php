@@ -402,7 +402,27 @@ class ApiController extends BaseController {
     }
 
     function adlibs($genre) {
+        $listadlibs = [];
+        $genre = "%" . $genre . "%";
+        $adlibs = Adlibs::where('genre', 'like', $genre)
+            ->where('type', '=', 'genre')
+            ->where('status', '=', 'active')
+            ->where('count', '>', 0)
+            ->limit(1)
+            ->orderBy('count', 'DESC')
+            ->get();
 
+        if ($adlibs->toArray()) {
+            $listadlibs = $adlibs->toArray();
+        }
+
+        if (count($listadlibs) > 10) {
+            break;
+        }
+
+        $json['success'] = true;
+        $json['data'] = $listadlibs;
+        return Response::json($json);
     }
 
 }
