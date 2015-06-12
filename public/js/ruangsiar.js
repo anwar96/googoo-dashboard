@@ -9,7 +9,7 @@ $(function () {
         ignoreList();
         hitslist();
         newsong();
-    }, 30000);
+    }, 60000);
 
     function ignoreList() {
         $.get('/api/ignore/list', function (r) {
