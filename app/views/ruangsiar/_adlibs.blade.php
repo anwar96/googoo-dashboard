@@ -1,6 +1,6 @@
 <tr>
-    <td>@{{artist}}</td>
-    <td>@{{bpm}}</td>
-    <td>@{{title}}</td>
-    <td>@{{name}}</td>
+    <td>@{{nama}}, @{{instansi}}</td>
+    <td>@{{text}}</td>
+    <td>@{{genre}}</td>
+    <td>@{{sisa}}</td>
 </tr>

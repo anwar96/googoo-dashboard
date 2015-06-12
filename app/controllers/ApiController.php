@@ -404,7 +404,9 @@ class ApiController extends BaseController {
     function adlibs($genre) {
         $listadlibs = [];
         $genre = "%" . $genre . "%";
-        $adlibs = Adlibs::where('genre', 'like', $genre)
+        $adlibs = Adlibs::select(['adlibs.*', 'clients.nama', 'clients.instansi'])
+            ->join('clients', 'clients.id', '=', 'adlibs.client_id')
+            ->where('genre', 'like', $genre)
             ->where('type', '=', 'genre')
             ->where('status', '=', 'active')
             ->where('count', '>', 0)
