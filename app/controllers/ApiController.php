@@ -87,7 +87,7 @@ class ApiController extends BaseController {
         $maxIndex = array_search(max($argenre2), $argenre2);
 
         $json['success'] = true;
-        $json['xx'] = $maxIndex;
+        $json['genre'] = $maxIndex;
         $json['data'] = $songs;
         return Response::json($json);
     }
@@ -399,6 +399,10 @@ class ApiController extends BaseController {
 
     function listartist() {
         echo "test";
+    }
+
+    function adlibs($genre) {
+
     }
 
 }

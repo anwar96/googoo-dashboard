@@ -84,6 +84,30 @@
                 </table>
             </div>
         </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Adlibs
+                <a class="btn btn-primary btn-xs pull-right" id="btn-reload-adlibs">
+                    <i class="glyphicon glyphicon-refresh"></i>
+                    <span id="text-reload-adlibs">reload</span>
+                </a>
+            </div>
+            <div style="max-height: 400px;overflow-y: auto">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="col-xs-1">Client</th>
+                            <th class="col-xs-4">Adlibs</th>
+                            <th>Genre</th>
+                            <th>Sisa</th>
+                            <th>&nbsp;</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adlibs"></tbody>
+                </table>
+            </div>
+        </div>
     </div>
 
 
@@ -237,6 +261,12 @@
 <script id="hb-newsong" type="text/x-handlebars-template">
     @{{#each data}}
     @include('ruangsiar._newsong');
+    @{{/each}}
+</script>
+
+<script id="hb-adlibs" type="text/x-handlebars-template">
+    @{{#each data}}
+    @include('ruangsiar._adlibs');
     @{{/each}}
 </script>
 

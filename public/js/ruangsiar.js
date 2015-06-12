@@ -29,6 +29,7 @@ $(function () {
             var template = Handlebars.compile(source);
             $("#playlist").html(template(r)).slideDown('slow');
             $("#text-reload-crowd").html('reload');
+            adlibs(r.genre);
         });
     }
     
@@ -63,6 +64,16 @@ $(function () {
             $("#text-reload-connected-user").html('');
             $(".timeago").timeago();
         });
+    }
+
+    function adlibs(genre){
+        $("#text-reload-adlibs").html('loading...');
+        $.get('/api/adlibs/'+genre, function (r) {
+            var source = $("#hb-adlibs").html();
+            var template = Handlebars.compile(source);
+            $("#adlibs").html(template(r)).slideDown('slow');
+            $("#text-reload-adlibs").html('reload');
+        });   
     }
 
     //change program
