@@ -47,8 +47,6 @@ class SongController extends BaseController {
     }
 
     function postAdd() {
-        // echo "<pre>";
-        // print_r(Input::all());exit;
         $song = new Song();
         if ($song->save()) {
             return Redirect::to('/artist/show/' . $song->artist_id)->with('message', 'data has been updated');
