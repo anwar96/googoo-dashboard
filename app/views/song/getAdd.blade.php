@@ -24,7 +24,7 @@ $(document).ready(function () {
             }
         }
     });
-    
+
     $('.autocomplete2').autocomplete({
         source: "{{URL::to('artist/artistlist')}}",
         minLength: 2,
