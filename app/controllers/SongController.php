@@ -13,7 +13,7 @@ class SongController extends BaseController {
         //return Response::json($songs);
         return View::make('song.getNewSong')->withSongs($songs);
     }
-    
+
     function getHitssongs() {
         $songs = Song::getHitsSongs(10);
         //return Response::json($songs);
@@ -27,9 +27,9 @@ class SongController extends BaseController {
     }
 
     function getEdit($id) {
-        $song = Song::leftJoin('genres', function($join) {
-                    $join->on('genres.id', '=', 'songs.genre_id');
-                })->findOrFail($id);
+        $song = Song::leftJoin('genres', function ($join) {
+            $join->on('genres.id', '=', 'songs.genre_id');
+        })->findOrFail($id);
         return View::make('song.getEdit')->withSong($song);
     }
 
@@ -41,12 +41,14 @@ class SongController extends BaseController {
             return Redirect::to('/song/edit/' . $id)->withErrors($song->errors());
         }
     }
-    
+
     function getAdd() {
         return View::make('song.getAdd');
     }
 
     function postAdd() {
+        echo "<pre>";
+        print_r(Input::all());exit;
         $song = new Song();
         if ($song->save()) {
             return Redirect::to('/artist/show/' . $song->artist_id)->with('message', 'data has been updated');
@@ -66,7 +68,7 @@ class SongController extends BaseController {
         $song->delete();
         return Redirect::to('/song/newsongs')->with('message', 'data has been deleted');
     }
-    
+
     public function getHitssongdelete($id) {
         $song = Chart::findOrFail($id);
         $song->delete();
@@ -78,27 +80,28 @@ class SongController extends BaseController {
     }
 
     public function getImport() {
-        $songs = Cache::remember('spreadsheet', 10, function() {
-                    $spreadsheet_url = 'https://docs.google.com/spreadsheet/pub?key=0Aq79H_FkDfcZdGZWQk9lQU1jZVY5WVB4UVduZV80UWc&output=csv';
-                    if (($handle = fopen($spreadsheet_url, "r")) !== FALSE) {
-                        $row = 0;
-                        while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
-                            if ($row > 20)
-                                break;
-
-                            $song['artist'] = $data[0];
-                            $song['title'] = $data[1];
-                            $song['album'] = $data[2];
-                            $song['genre'] = $data[3];
-                            $song['year'] = $data[4];
-                            $song['bpm'] = $data[5];
-                            $songs[] = $song;
-                            $row++;
-                        }
+        $songs = Cache::remember('spreadsheet', 10, function () {
+            $spreadsheet_url = 'https://docs.google.com/spreadsheet/pub?key=0Aq79H_FkDfcZdGZWQk9lQU1jZVY5WVB4UVduZV80UWc&output=csv';
+            if (($handle = fopen($spreadsheet_url, "r")) !== FALSE) {
+                $row = 0;
+                while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+                    if ($row > 20) {
+                        break;
                     }
-                    fclose($handle);
-                    return $songs;
-                });
+
+                    $song['artist'] = $data[0];
+                    $song['title'] = $data[1];
+                    $song['album'] = $data[2];
+                    $song['genre'] = $data[3];
+                    $song['year'] = $data[4];
+                    $song['bpm'] = $data[5];
+                    $songs[] = $song;
+                    $row++;
+                }
+            }
+            fclose($handle);
+            return $songs;
+        });
 
         foreach ($songs as $song) {
             $dbsong = Song::where('slug', Str::slug(strtolower($song['artist'] . ' ' . $song['title'])))->first();
