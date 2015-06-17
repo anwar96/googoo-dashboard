@@ -130,11 +130,13 @@ class Song extends \LaravelBook\Ardent\Ardent {
         $iArtist = Input::get('artist', $this->artist);
         $iTitle = Input::get('title', $this->title);
         $iGenre = Input::get('genre', $this->genre);
+        if (Input::get('artist_id')) {
+            $artist = Artist::findOrFail(Input::get('artist_id'));
+            $slugArtist = $artist->slug;
+        } else {
+            $slugArtist = strtolower(Str::slug($iArtist));
+        }
 
-        $artist = Artist::findOrFail(Input::get('artist_id'));
-        $slugArtist = $artist->slug;
-
-        //$slugArtist = strtolower(Str::slug($iArtist));
         $slugGenre = strtolower(Str::slug($iGenre));
         $slugTitle = strtolower(Str::slug($iArtist . ' ' . $iTitle));
 
