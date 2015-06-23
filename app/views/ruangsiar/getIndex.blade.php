@@ -101,10 +101,31 @@
                             <th class="col-xs-4">Adlibs</th>
                             <th>Genre</th>
                             <th>Sisa</th>
-                            <th>&nbsp;</th>
                         </tr>
                     </thead>
                     <tbody id="adlibs"></tbody>
+                </table>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                AudioSpot
+                <a class="btn btn-primary btn-xs pull-right" id="btn-reload-audiospot">
+                    <i class="glyphicon glyphicon-refresh"></i>
+                    <span id="text-reload-audiospot">reload</span>
+                </a>
+            </div>
+            <div style="max-height: 400px;overflow-y: auto">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Client</th>
+                            <th class="col-xs-4">audiospot</th>
+                            <th>Genre</th>
+                            <th>Sisa</th>
+                        </tr>
+                    </thead>
+                    <tbody id="audiospot"></tbody>
                 </table>
             </div>
         </div>
@@ -241,6 +262,16 @@
 
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="audiospotModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="adlibsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+</div>
+
 
 <script id="hb-listeners" type="text/x-handlebars-template">
     @include('ruangsiar._listeners')
@@ -268,6 +299,20 @@
     @{{#each data}}
     @include('ruangsiar._adlibs');
     @{{/each}}
+</script>
+
+<script id="hb-audiospot" type="text/x-handlebars-template">
+    @{{#each data}}
+    @include('ruangsiar._audiospot');
+    @{{/each}}
+</script>
+
+<script id="hb-audiospot-modal" type="text/x-handlebars-template">
+    @include('ruangsiar._audiospotmodal');
+</script>
+
+<script id="hb-adlibs-modal" type="text/x-handlebars-template">
+    @include('ruangsiar._adlibsmodal');
 </script>
 
 <script id="hb-likedmember" type="text/x-handlebars-template">

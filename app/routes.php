@@ -47,6 +47,10 @@ Route::group(array('before' => 'auth'), function () {
     Route::get('api/likedartist/{id}', 'ApiController@likedartist');
     Route::get('api/adlibs/{genre}', 'ApiController@adlibs');
     Route::get('api/updateadlibs/{id}', 'ApiController@updateadlibs');
+    Route::get('api/viewadlibs/{id}', 'ApiController@viewadlibs');
+    Route::get('api/audiospot/{genre}', 'ApiController@audiospot');
+    Route::get('api/updateaudiospot/{id}', 'ApiController@updateaudiospot');
+    Route::get('api/viewaudiospot/{id}', 'ApiController@viewaudiospot');
 });
 
 Route::get('login', array('uses' => 'LoginController@showLogin'));

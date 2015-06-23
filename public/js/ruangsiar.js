@@ -31,6 +31,7 @@ $(function () {
             $("#text-reload-crowd").html('reload');
             $("#topgenre").html(r.genre);
             adlibs(r.genre);
+            audiospot(r.genre);
         });
     }
     
@@ -74,6 +75,16 @@ $(function () {
             var template = Handlebars.compile(source);
             $("#adlibs").html(template(r)).slideDown('slow');
             $("#text-reload-adlibs").html('reload');
+        });   
+    }
+
+    function audiospot(genre){
+        $("#text-reload-audiospot").html('loading...');
+        $.get('/api/audiospot/'+genre, function (r) {
+            var source = $("#hb-audiospot").html();
+            var template = Handlebars.compile(source);
+            $("#audiospot").html(template(r)).slideDown('slow');
+            $("#text-reload-audiospot").html('reload');
         });   
     }
 
@@ -213,6 +224,59 @@ $(function () {
         var id = $(this).attr('data-id');
         $.get('/api/updateadlibs/' + id, function (r) {
             playlist();
+        });
+
+        return false; 
+    });
+
+    $('#adlibsModal').on('click', '.btn-update-adlibs', function(){
+       var id = $(this).attr('data-id');
+        $.get('/api/updateadlibs/' + id, function (r) {
+            playlist();
+            $('#adlibsModal').modal('hide');
+        });
+
+        return false;  
+    });
+
+    $('#audiospotModal').on('click', '.btn-update-audiospot', function(){
+        var id = $(this).attr('data-id');
+        $.get('/api/updateaudiospot/' + id, function (r) {
+            playlist();
+            $('#audiospotModal').modal('hide');
+        });
+        
+        return false;  
+    });
+
+    $("#adlibs").on('click', '.btn-view', function () {
+        var id = $(this).attr('data-id');
+        $.get('/api/viewadlibs/' + id, function (r) {
+            var source = $("#hb-adlibs-modal").html();
+            var template = Handlebars.compile(source);
+            $("#adlibsModal").html(template(r)).slideDown('slow');
+            $('#adlibsModal').modal('show');
+        });
+
+        return false; 
+    });
+
+    $("#audiospot").on('click', '.btn-click-audiospot', function () {
+        var id = $(this).attr('data-id');
+        $.get('/api/updateaudiospot/' + id, function (r) {
+            playlist();
+        });
+
+        return false; 
+    });
+
+    $("#audiospot").on('click', '.btn-view', function () {
+        var id = $(this).attr('data-id');
+        $.get('/api/viewaudiospot/' + id, function (r) {
+            var source = $("#hb-audiospot-modal").html();
+            var template = Handlebars.compile(source);
+            $("#audiospotModal").html(template(r)).slideDown('slow');
+            $('#audiospotModal').modal('show');
         });
 
         return false; 

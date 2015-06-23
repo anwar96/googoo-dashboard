@@ -446,4 +446,63 @@ class ApiController extends BaseController {
         return Response::json($json);
     }
 
+    function viewadlibs($id) {
+        $adlibs = Adlibs::findOrFail($id);
+        $json['success'] = true;
+        $json['data']= $adlibs->toArray();
+        return Response::json($json);
+    }
+
+    function audiospot($genre) {
+        $listaudiospots = [];
+        $genre = "%" . $genre . "%";
+        $audiospots = Audiospot::select(['audiospots.*', 'clients.nama', 'clients.instansi'])
+            ->join('clients', 'clients.id', '=', 'audiospots.client_id')
+            ->where('genre', 'like', $genre)
+            ->where('type', '=', 'genre')
+            ->where('status', '=', 'active')
+            ->where('count', '>', 0)
+            ->limit(1)
+            ->orderBy('count', 'DESC')
+            ->get();
+
+        if ($audiospots->toArray()) {
+            $listaudiospots = $audiospots->toArray();
+        }
+
+        if (count($listaudiospots) > 10) {
+            break;
+        }
+
+        $json['success'] = true;
+        $json['data'] = $listaudiospots;
+        return Response::json($json);
+    }
+
+    function updateaudiospot($id) {
+        $audiospots = Audiospot::findOrFail($id);
+        $audiospots->count = $audiospots->count - 1;
+        if ($audiospots->count <= 0) {
+            $audiospots->status = 'nonactive';
+        }
+        if ($audiospots->save()) {
+            $logs = new Audiospotlog();
+            $logs->audiospot_id = $id;
+            $logs->save();
+
+            $json['success'] = true;
+        } else {
+            $json['success'] = false;
+        }
+
+        return Response::json($json);
+    }
+
+    function viewaudiospot($id) {
+        $audiospots = Audiospot::findOrFail($id);
+        $json['success'] = true;
+        $json['data']= $audiospots->toArray();
+        return Response::json($json);
+    }
+
 }
