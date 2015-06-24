@@ -426,6 +426,29 @@ class ApiController extends BaseController {
         $json['data'] = $listadlibs;
         return Response::json($json);
     }
+    
+    function adlibsevent() {
+        $listadlibs = [];
+        $adlibs = Adlibs::select(['adlibs.*', 'clients.nama', 'clients.instansi'])
+            ->join('clients', 'clients.id', '=', 'adlibs.client_id')
+            ->where('type', '=', 'event')
+            ->where('status', '=', 'active')
+            ->where('count', '>', 0)
+            ->orderBy('count', 'DESC')
+            ->get();
+
+        if ($adlibs->toArray()) {
+            $listadlibs = $adlibs->toArray();
+        }
+
+        if (count($listadlibs) > 10) {
+            break;
+        }
+
+        $json['success'] = true;
+        $json['data'] = $listadlibs;
+        return Response::json($json);
+    }
 
     function updateadlibs($id) {
         $adlibs = Adlibs::findOrFail($id);
@@ -463,6 +486,29 @@ class ApiController extends BaseController {
             ->where('status', '=', 'active')
             ->where('count', '>', 0)
             ->limit(1)
+            ->orderBy('count', 'DESC')
+            ->get();
+
+        if ($audiospots->toArray()) {
+            $listaudiospots = $audiospots->toArray();
+        }
+
+        if (count($listaudiospots) > 10) {
+            break;
+        }
+
+        $json['success'] = true;
+        $json['data'] = $listaudiospots;
+        return Response::json($json);
+    }
+    
+    function audiospotevent() {
+        $listaudiospots = [];
+        $audiospots = Audiospot::select(['audiospots.*', 'clients.nama', 'clients.instansi'])
+            ->join('clients', 'clients.id', '=', 'audiospots.client_id')
+            ->where('type', '=', 'event')
+            ->where('status', '=', 'active')
+            ->where('count', '>', 0)
             ->orderBy('count', 'DESC')
             ->get();
 

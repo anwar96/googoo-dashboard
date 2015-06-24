@@ -31,7 +31,9 @@ $(function () {
             $("#text-reload-crowd").html('reload');
             $("#topgenre").html(r.genre);
             adlibs(r.genre);
+            adlibsevent();
             audiospot(r.genre);
+            audiospotevent();
         });
     }
     
@@ -77,6 +79,16 @@ $(function () {
             $("#text-reload-adlibs").html('reload');
         });   
     }
+    
+    function adlibsevent(){
+        $("#text-reload-adlibsevent").html('loading...');
+        $.get('/api/adlibsevent/', function (r) {
+            var source = $("#hb-adlibsevent").html();
+            var template = Handlebars.compile(source);
+            $("#adlibsevent").html(template(r)).slideDown('slow');
+            $("#text-reload-adlibsevent").html('reload');
+        });   
+    }
 
     function audiospot(genre){
         $("#text-reload-audiospot").html('loading...');
@@ -85,6 +97,16 @@ $(function () {
             var template = Handlebars.compile(source);
             $("#audiospot").html(template(r)).slideDown('slow');
             $("#text-reload-audiospot").html('reload');
+        });   
+    }
+    
+    function audiospotevent(){
+        $("#text-reload-audiospotevent").html('loading...');
+        $.get('/api/audiospotevent/', function (r) {
+            var source = $("#hb-audiospotevent").html();
+            var template = Handlebars.compile(source);
+            $("#audiospotevent").html(template(r)).slideDown('slow');
+            $("#text-reload-audiospotevent").html('reload');
         });   
     }
 
@@ -228,6 +250,15 @@ $(function () {
 
         return false; 
     });
+    
+    $("#adlibsevent").on('click', '.btn-click-adlibs', function () {
+        var id = $(this).attr('data-id');
+        $.get('/api/updateadlibs/' + id, function (r) {
+            playlist();
+        });
+
+        return false; 
+    });
 
     $('#adlibsModal').on('click', '.btn-update-adlibs', function(){
        var id = $(this).attr('data-id');
@@ -260,6 +291,18 @@ $(function () {
 
         return false; 
     });
+    
+    $("#adlibsevent").on('click', '.btn-view', function () {
+        var id = $(this).attr('data-id');
+        $.get('/api/viewadlibs/' + id, function (r) {
+            var source = $("#hb-adlibs-modal").html();
+            var template = Handlebars.compile(source);
+            $("#adlibsModal").html(template(r)).slideDown('slow');
+            $('#adlibsModal').modal('show');
+        });
+
+        return false; 
+    });
 
     $("#audiospot").on('click', '.btn-click-audiospot', function () {
         var id = $(this).attr('data-id');
@@ -271,6 +314,18 @@ $(function () {
     });
 
     $("#audiospot").on('click', '.btn-view', function () {
+        var id = $(this).attr('data-id');
+        $.get('/api/viewaudiospot/' + id, function (r) {
+            var source = $("#hb-audiospot-modal").html();
+            var template = Handlebars.compile(source);
+            $("#audiospotModal").html(template(r)).slideDown('slow');
+            $('#audiospotModal').modal('show');
+        });
+
+        return false; 
+    });
+    
+    $("#audiospotevent").on('click', '.btn-view', function () {
         var id = $(this).attr('data-id');
         $.get('/api/viewaudiospot/' + id, function (r) {
             var source = $("#hb-audiospot-modal").html();

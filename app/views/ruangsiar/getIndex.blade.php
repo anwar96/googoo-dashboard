@@ -98,12 +98,34 @@
                     <thead>
                         <tr>
                             <th>Client</th>
-                            <th class="col-xs-4">Adlibs</th>
-                            <th>Genre</th>
+                            <th class="col-xs-2">Adlibs</th>
+                            <th class="col-xs-4">Genre</th>
                             <th>Sisa</th>
                         </tr>
                     </thead>
                     <tbody id="adlibs"></tbody>
+                </table>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Adlibs Event
+                <a class="btn btn-primary btn-xs pull-right" id="btn-reload-adlibs">
+                    <i class="glyphicon glyphicon-refresh"></i>
+                    <span id="text-reload-adlibsevent">reload</span>
+                </a>
+            </div>
+            <div style="max-height: 400px;overflow-y: auto">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Client</th>
+                            <th class="col-xs-2">Adlibs</th>
+                            <th class="col-xs-4">Type</th>
+                            <th>Sisa</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adlibsevent"></tbody>
                 </table>
             </div>
         </div>
@@ -120,12 +142,35 @@
                     <thead>
                         <tr>
                             <th>Client</th>
-                            <th class="col-xs-4">audiospot</th>
-                            <th>Genre</th>
+                            <th class="col-xs-2">audiospot</th>
+                            <th class="col-xs-4">Genre</th>
                             <th>Sisa</th>
                         </tr>
                     </thead>
                     <tbody id="audiospot"></tbody>
+                </table>
+            </div>
+        </div>
+        
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                AudioSpot Event
+                <a class="btn btn-primary btn-xs pull-right" id="btn-reload-audiospot">
+                    <i class="glyphicon glyphicon-refresh"></i>
+                    <span id="text-reload-audiospotevent">reload</span>
+                </a>
+            </div>
+            <div style="max-height: 400px;overflow-y: auto">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Client</th>
+                            <th class="col-xs-2">audiospot</th>
+                            <th class="col-xs-4">type</th>
+                            <th>Sisa</th>
+                        </tr>
+                    </thead>
+                    <tbody id="audiospotevent"></tbody>
                 </table>
             </div>
         </div>
@@ -296,14 +341,22 @@
 </script>
 
 <script id="hb-adlibs" type="text/x-handlebars-template">
-    @{{#each data}}
     @include('ruangsiar._adlibs');
-    @{{/each}}
+</script>
+
+<script id="hb-adlibsevent" type="text/x-handlebars-template">
+    @include('ruangsiar._adlibsevent');
 </script>
 
 <script id="hb-audiospot" type="text/x-handlebars-template">
     @{{#each data}}
     @include('ruangsiar._audiospot');
+    @{{/each}}
+</script>
+
+<script id="hb-audiospotevent" type="text/x-handlebars-template">
+    @{{#each data}}
+    @include('ruangsiar._audiospotevent');
     @{{/each}}
 </script>
 
