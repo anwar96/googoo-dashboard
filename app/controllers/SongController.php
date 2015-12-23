@@ -13,7 +13,7 @@ class SongController extends BaseController {
         //return Response::json($songs);
         return View::make('song.getNewSong')->withSongs($songs);
     }
-
+ 
     function getHitssongs() {
         $songs = Song::getHitsSongs(10);
         //return Response::json($songs);

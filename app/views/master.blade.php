@@ -46,6 +46,9 @@
                         <li><a href="{{URL::to('/client')}}">Client</a></li>
                         <li><a href="{{URL::to('/adlibs')}}">Adlibs</a></li>
                         <li><a href="{{URL::to('/audiospot')}}">Audio Spot</a></li>
+                        <li><a href="{{URL::to('/weeklyprogram')}}">
+                        Weekly Program</a></li>
+                        <li><a href="{{URL::to('/teaser')}}">Teaser</a></li>
 
                     </ul>
                     <ul class="nav navbar-nav navbar-right">

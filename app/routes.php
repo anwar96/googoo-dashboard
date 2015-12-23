@@ -26,6 +26,9 @@ Route::group(array('before' => 'auth'), function () {
     Route::controller('client', 'ClientController');
     Route::controller('adlibs', 'AdlibsController');
     Route::controller('audiospot', 'AudiospotController');
+    Route::controller('teaser', 'TeasersController');
+    Route::controller('weeklyprogram', 'WeeklyprogramsController');
+
 
     //API
     Route::get('api/playlist', 'ApiController@playlist');
@@ -53,7 +56,14 @@ Route::group(array('before' => 'auth'), function () {
     Route::get('api/audiospotevent/', 'ApiController@audiospotevent');
     Route::get('api/updateaudiospot/{id}', 'ApiController@updateaudiospot');
     Route::get('api/viewaudiospot/{id}', 'ApiController@viewaudiospot');
+    Route::get('api/teasers', 'ApiController@getallteasers');
+    Route::get('api/teasers/{id}', 'ApiController@getteaser');
+    Route::get('api/weeklyprograms/from/{date_from}/to/{date_to}', 'ApiController@getweeklyprogramsbyhour');
+    Route::get('api/weeklyprograms/day/{day}', 'ApiController@getweeklyprogramsbyday');
+    Route::get('api/weeklyprograms/{name}', 'ApiController@getweeklyprograms');
 });
+
+
 
 Route::get('login', array('uses' => 'LoginController@showLogin'));
 Route::post('login', array('uses' => 'LoginController@doLogin'));
