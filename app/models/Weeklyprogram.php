@@ -2,7 +2,7 @@
 
 class Weeklyprogram extends \Eloquent {
 
-	private static $hari = ['Minggu','Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+	private static $hari = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'];
 	
 	public $timestamps = false;
 
