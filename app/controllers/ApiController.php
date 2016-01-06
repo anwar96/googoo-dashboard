@@ -287,7 +287,7 @@ class ApiController extends BaseController {
      *
      * GET /api/program/change/{id}
      * @param int $id
-     * @return json
+     * @return Array json
      */
     public function programChange($id) {
         DB::table('programs')
@@ -548,6 +548,78 @@ class ApiController extends BaseController {
         $audiospots = Audiospot::findOrFail($id);
         $json['success'] = true;
         $json['data']= $audiospots->toArray();
+        return Response::json($json);
+    }
+
+    function getallteasers() {
+        $json['success'] = true;
+        $json['results'] = Teaser::all();
+
+        return Response::json($json);
+    }
+
+    function getteaser($id) {
+        $teaser = Teaser::findOrFail($id);
+        $json['success'] = true;
+        $json['results'] = $teaser->toArray(); 
+        return Response::json($json);
+    }
+
+    /*
+    * api/getweeklyprogramsbyhour/from/5/to/18
+    * return {'status'=> true, 'from' => '5 AM', 'to' => '6 PM', 'results' => ['name' => 'program dari 5 AM - 6 PM']}
+    */
+
+    function getweeklyprogramsbyhour($date_from, $date_to) {
+        $date['from'] = $date_from;
+        $date['to'] = $date_to;
+
+        $validator = Validator::make($date, array(
+            'from' => 'required|integer|between:1,24',
+            'to'    => 'required|integer|between:1,24'
+        ));
+
+        if ($validator->fails()) {
+            $json['status'] = false;
+            $json['results'] = [];
+            return Response::json($json);
+        }
+
+        foreach ($date as $k => $v) {
+            $date[$k] = date("g A", strtotime("$v:00"));
+        }
+
+
+        $results = Weeklyprogram::where('hour', '=', $date['from']." - ".$date['to'])->get(); 
+
+        $json['status'] = true;
+        $json['from'] = $date['from'];
+        $json['to'] = $date['to'];
+        $json['results'] = $results;
+        return Response::json($json);
+    }
+
+    public function getweeklyprogramsbyday($day) {
+        if ($day >= 0 && $day <= 6 && is_numeric($day)) {
+            $results = Weeklyprogram::where('day', $day)->get();
+
+            $json['status'] = true;
+            $json['hari'] = Weeklyprogram::getDay($day);
+            $json['results'] = $results;
+            return Response::json($json);     
+        }
+
+        $json['status'] = false;
+        $json['results'] = [];
+        return Response::json($json);
+    }
+
+    function getweeklyprograms($name) {
+        $results = Weeklyprogram::where('name', 'like', $name)
+                                ->get();
+
+        $json['status'] = true;
+        $json['results'] = $results;
         return Response::json($json);
     }
 
